@@ -20,22 +20,49 @@ namespace IconTool.ViewModels
         };
 
         public Dictionary<string, string> Fills { get; set; } = new Dictionary<string, string>() {
-            { "单色图标",string.Empty},
+            { "所有颜色",string.Empty},
             { "多色图标","1"},
+            { "单色图标","0"},
         };
+
+
+
+        private string _tag;
+        public string Tag
+        {
+            get { return _tag; }
+            set
+            {
+                if (SetProperty(ref _tag, value))
+                {
+                    RefreshIcons();
+                }
+            }
+        }
+
+
+
 
         private string _searchText;
         public string SearchText { get { return _searchText; } set {
                 if (SetProperty(ref _searchText, value)) {
                     RefreshIcons();
                 }
+            } 
+        }
 
+        private string _colorType;
+        public string ColorType { get { return _colorType; } set 
+            {
+                if (SetProperty(ref _colorType, value)) {
+                    RefreshIcons();
+                }
             } 
         }
 
         private void RefreshIcons()
         {
-            var res = HttpClientHelper.Post<ResultModel<IconCollection>>(SearchText, FromType);
+            var res = HttpClientHelper.Post<ResultModel<IconCollection>>(SearchText, FromType, ColorType);
             if (res.IsSuccess)
             {
                 Items = res.Data.Icons;
@@ -58,11 +85,7 @@ namespace IconTool.ViewModels
 
         public MainWindowViewModel()
         {
-            var res = HttpClientHelper.Post<ResultModel<IconCollection>>("");
-            if (res.IsSuccess)
-            {
-                Items = res.Data.Icons;
-            }
+            RefreshIcons();
             CopyPathCommand = new DelegateCommand<string>(OnClickCopyPath);
         }
 

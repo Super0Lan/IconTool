@@ -48,19 +48,16 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <WrapPanel ItemHeight="70" Background="#F0F0F0">
-            <ComboBox x:Name="fromCollection" SelectedValuePath="Value" SelectedIndex="0" Margin="20 0 90 0" Width="160" Height="30" ItemsSource="{Binding FromCollection}" DisplayMemberPath="Key" SelectedValue="{Binding FromType,Mode=TwoWay}">
+            <ComboBox x:Name="fromCollection" SelectedValuePath="Value" SelectedIndex="0" Margin="20 0 0 0" Width="160" Height="30" ItemsSource="{Binding FromCollection}" DisplayMemberPath="Key" SelectedValue="{Binding FromType,Mode=TwoWay}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
                         <i:InvokeCommandAction Command="{Binding CollectionChangedCommand}" CommandParameter="{Binding ElementName=fromCollection,Path=SelectedItem}"></i:InvokeCommandAction>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </ComboBox>
-            <!--<ComboBox Margin="20 0 90 0" Width="160" Height="30">
-                <ComboBoxItem IsSelected="True" Content="所有颜色"></ComboBoxItem>
-                <ComboBoxItem Content="多色图标"></ComboBoxItem>
-                <ComboBoxItem Content="单色图标"></ComboBoxItem>
-            </ComboBox>-->
-            <ListBox Visibility="Collapsed" SelectedIndex="0" VerticalAlignment="Center" BorderThickness="0">
+            <ComboBox Margin="20 0 0 0" Width="160" Height="30" SelectedValuePath="Value" SelectedIndex="0" ItemsSource="{Binding Fills}" DisplayMemberPath="Key" SelectedValue="{Binding ColorType,Mode=TwoWay}">
+            </ComboBox>
+            <ListBox Margin="20" SelectedIndex="0" VerticalAlignment="Center" BorderThickness="0">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel></WrapPanel>

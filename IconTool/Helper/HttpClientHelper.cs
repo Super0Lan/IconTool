@@ -10,7 +10,7 @@ namespace IconTool.Helper
 {
     public static class HttpClientHelper
     {
-        public static T Post<T>(string param,string fromCollection = "-1") {
+        public static T Post<T>(string param,string fromCollection = "-1",string colorType = "") {
             using (HttpClient client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Add("authority", "www.iconfont.cn");
@@ -31,19 +31,17 @@ namespace IconTool.Helper
                         { "page","1"},
                         { "pageSize","54"},
                         { "fromCollection",fromCollection},
-                        { "fills","0"},
+                        { "fills",colorType},
                         { "t",ConvertDateTimeToInt().ToString()},
                         { "ctoken","1dYB-tMJpFsR7TGWWz-p1xRy"},
                 });
-
-
                 var response = client.PostAsync("https://www.iconfont.cn/api/icon/search.json", content);
                 var res = response.Result;
                 if (res.IsSuccessStatusCode)
                 {
                     return JsonConvert.DeserializeObject<T>(res.Content.ReadAsStringAsync().Result);
                 }
-                return default(T);
+                return default;
             }
         }
 
