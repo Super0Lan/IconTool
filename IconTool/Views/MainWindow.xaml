@@ -10,6 +10,11 @@
         xmlns:local="clr-namespace:IconTool"
         mc:Ignorable="d" 
         Title="MainWindow" Height="800" Width="940" x:Name="mainWindow">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}"></i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Window.Resources>
         <converter:String2GeometryConverter x:Key="String2GeometryConverter"></converter:String2GeometryConverter>
         <converter:Geometry2StringConverter x:Key="Geometry2StringConverter"></converter:Geometry2StringConverter>
@@ -57,19 +62,12 @@
             </ComboBox>
             <ComboBox Margin="20 0 0 0" Width="160" Height="30" SelectedValuePath="Value" SelectedIndex="0" ItemsSource="{Binding Fills}" DisplayMemberPath="Key" SelectedValue="{Binding ColorType,Mode=TwoWay}">
             </ComboBox>
-            <ListBox Margin="20" SelectedIndex="0" VerticalAlignment="Center" BorderThickness="0">
+            <ListBox DisplayMemberPath="Key" SelectedValuePath="Value" SelectedIndex="0" SelectedValue="{Binding Tag}" ItemsSource="{Binding Tags}" Margin="20" VerticalAlignment="Center" BorderThickness="0">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel></WrapPanel>
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
-                <ListBoxItem Content="全部"></ListBoxItem>
-                <ListBoxItem Content="线性"></ListBoxItem>
-                <ListBoxItem Content="面性"></ListBoxItem>
-                <ListBoxItem Content="扁平"></ListBoxItem>
-                <ListBoxItem Content="手绘"></ListBoxItem>
-                <ListBoxItem Content="简约"></ListBoxItem>
-                <ListBoxItem Content="精美"></ListBoxItem>
             </ListBox>
             <TextBox  Margin="20 0 0 0" Width="160" Height="30" Text="{Binding SearchText,Mode=TwoWay}" VerticalContentAlignment="Center"></TextBox>
         </WrapPanel>
@@ -82,5 +80,6 @@
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
         </ListBox>
+        <local:Pagination Width="100" Height="30" Background="Red"></local:Pagination>
     </Grid>
 </Window>

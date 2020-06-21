@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace IconTool.ViewModels
 {
@@ -25,6 +26,15 @@ namespace IconTool.ViewModels
             { "单色图标","0"},
         };
 
+        public Dictionary<string, string> Tags { get; set; } = new Dictionary<string, string>() {
+            { "全部",string.Empty},
+            { "线性","line"},
+            { "面性","fill"},
+            { "扁平","flat"},
+            { "手绘","hand"},
+            { "简约","simple"},
+            { "精美","complex"},
+        };
 
 
         private string _tag;
@@ -62,10 +72,12 @@ namespace IconTool.ViewModels
 
         private void RefreshIcons()
         {
-            var res = HttpClientHelper.Post<ResultModel<IconCollection>>(SearchText, FromType, ColorType);
-            if (res.IsSuccess)
-            {
-                Items = res.Data.Icons;
+            if (_isLoaded) {
+                var res = HttpClientHelper.Post<ResultModel<IconCollection>>(SearchText, FromType, ColorType,Tag);
+                if (res.IsSuccess)
+                {
+                    Items = res.Data.Icons;
+                }
             }
         }
 
@@ -83,10 +95,19 @@ namespace IconTool.ViewModels
 
         public DelegateCommand<string> CopyPathCommand { get; private set; }
 
+        public ICommand LoadedCommand { get; private set; }
+
         public MainWindowViewModel()
         {
-            RefreshIcons();
             CopyPathCommand = new DelegateCommand<string>(OnClickCopyPath);
+            LoadedCommand = new DelegateCommand(OnLoaded);
+        }
+        private bool _isLoaded = false;
+
+        private void OnLoaded()
+        {
+            _isLoaded = true;
+            RefreshIcons();
         }
 
         private void OnClickCopyPath(string obj)

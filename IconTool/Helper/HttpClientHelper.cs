@@ -10,7 +10,7 @@ namespace IconTool.Helper
 {
     public static class HttpClientHelper
     {
-        public static T Post<T>(string param,string fromCollection = "-1",string colorType = "") {
+        public static T Post<T>(string param,string fromCollection = "-1",string colorType = "",string tag= null) {
             using (HttpClient client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Add("authority", "www.iconfont.cn");
@@ -25,7 +25,7 @@ namespace IconTool.Helper
                 client.DefaultRequestHeaders.Add("referer", "https://www.iconfont.cn/search/index?searchType=icon^&q=" + param);
                 client.DefaultRequestHeaders.Add("accept-language", "zh-CN,zh;q=0.9");
                 client.DefaultRequestHeaders.Add("cookie", "cna=C1U5F7VqIHgCAXQYQ7wsnTwD; trace=AQAAANC/kCIougMASkMYdLVSl+o4pJI2; ctoken=1dYB-tMJpFsR7TGWWz-p1xRy; isg=BLe3WLq5pWSariHrH-rQYsDvRqsBfIvex4YwuglkwAbtuNf6EUzWLoqamhjmUGNW");
-                FormUrlEncodedContent content = new FormUrlEncodedContent(new Dictionary<string, string>{
+                var paramDic = new Dictionary<string, string>{
                         { "q",string.IsNullOrEmpty(param) ? "iconfont":param},
                         { "sortType","updated_at"},
                         { "page","1"},
@@ -34,7 +34,11 @@ namespace IconTool.Helper
                         { "fills",colorType},
                         { "t",ConvertDateTimeToInt().ToString()},
                         { "ctoken","1dYB-tMJpFsR7TGWWz-p1xRy"},
-                });
+                };
+                if (!string.IsNullOrEmpty(tag)) {
+                    paramDic.Add(tag, "1");
+                }
+                FormUrlEncodedContent content = new FormUrlEncodedContent(paramDic);
                 var response = client.PostAsync("https://www.iconfont.cn/api/icon/search.json", content);
                 var res = response.Result;
                 if (res.IsSuccessStatusCode)
