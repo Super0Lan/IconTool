@@ -8,20 +8,14 @@
         xmlns:converter="clr-namespace:IconTool.Converter"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:local="clr-namespace:IconTool"
-        mc:Ignorable="d" 
-        Title="MainWindow" Height="800" Width="940" x:Name="mainWindow">
+        mc:Ignorable="d" Height="800" Width="940"
+        Title="MainWindow" MinHeight="800" MinWidth="940" x:Name="mainWindow">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding LoadedCommand}"></i:InvokeCommandAction>
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Window.Resources>
-        <converter:String2GeometryConverter x:Key="String2GeometryConverter"></converter:String2GeometryConverter>
-        <converter:Geometry2StringConverter x:Key="Geometry2StringConverter"></converter:Geometry2StringConverter>
-        <Style TargetType="ComboBox">
-            <Setter Property="HorizontalContentAlignment" Value="Left"></Setter>
-            <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
-        </Style>
         <Style TargetType="ListBoxItem" x:Key="IconItem">
             <Setter Property="Width" Value="100"></Setter>
             <Setter Property="Height" Value="105"></Setter>
@@ -54,23 +48,31 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <WrapPanel ItemHeight="70" Background="#F0F0F0">
-            <ComboBox x:Name="fromCollection" SelectedValuePath="Value" SelectedIndex="0" Margin="20 0 0 0" Width="160" Height="30" ItemsSource="{Binding FromCollection}" DisplayMemberPath="Key" SelectedValue="{Binding FromType,Mode=TwoWay}">
+            <ComboBox x:Name="fromCollection" SelectedValuePath="Value" SelectedIndex="0" Margin="20 0 0 0" ItemsSource="{Binding FromCollection}" DisplayMemberPath="Key" SelectedValue="{Binding FromType,Mode=TwoWay}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
                         <i:InvokeCommandAction Command="{Binding CollectionChangedCommand}" CommandParameter="{Binding ElementName=fromCollection,Path=SelectedItem}"></i:InvokeCommandAction>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </ComboBox>
-            <ComboBox Margin="20 0 0 0" Width="160" Height="30" SelectedValuePath="Value" SelectedIndex="0" ItemsSource="{Binding Fills}" DisplayMemberPath="Key" SelectedValue="{Binding ColorType,Mode=TwoWay}">
+            <ComboBox Margin="20 0 0 0" SelectedValuePath="Value" SelectedIndex="0" ItemsSource="{Binding Fills}" DisplayMemberPath="Key" SelectedValue="{Binding ColorType,Mode=TwoWay}">
             </ComboBox>
-            <ListBox DisplayMemberPath="Key" SelectedValuePath="Value" SelectedIndex="0" SelectedValue="{Binding Tag}" ItemsSource="{Binding Tags}" Margin="20" VerticalAlignment="Center" BorderThickness="0">
+            <ListBox DisplayMemberPath="Key" SelectedValuePath="Value" Background="Transparent"
+                     ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                     ScrollViewer.VerticalScrollBarVisibility="Hidden" Foreground="#7f7f7f"
+                     SelectedIndex="0" SelectedValue="{Binding Tag}" ItemsSource="{Binding Tags}" 
+                     Margin="20 0 0 0" VerticalAlignment="Center" BorderThickness="0">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel></WrapPanel>
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
             </ListBox>
-            <TextBox  Margin="20 0 0 0" Width="160" Height="30" Text="{Binding SearchText,Mode=TwoWay}" VerticalContentAlignment="Center"></TextBox>
+            <TextBox local:Assists.Icon="Magnifier" local:Assists.IconPosition="Right" 
+                     local:Assists.PlaceHolder="请搜索图标"
+                     Margin="10 0 0 0" Width="140" Height="35" 
+                     Text="{Binding SearchText,Mode=TwoWay}" 
+                     VerticalContentAlignment="Center"></TextBox>
         </WrapPanel>
         <ListBox Margin="0 10 0 0" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  ItemsSource="{Binding Items}" Grid.Row="1" ItemContainerStyle="{StaticResource IconItem}">
             <ListBox.ItemsPanel>

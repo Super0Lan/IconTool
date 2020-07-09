@@ -1,14 +1,20 @@
 ﻿<prism:PrismApplication 
-            x:Class="IconTool.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    x:Class="IconTool.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:prism="http://prismlibrary.com/"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:converter="clr-namespace:IconTool.Converter"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/IconTool;component/Themes/Generic.xaml"></ResourceDictionary>
                 <ResourceDictionary Source="pack://application:,,,/IconTool;component/Themes/Pagination.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="pack://application:,,,/IconTool;component/Themes/ComboBox.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="pack://application:,,,/IconTool;component/Themes/ListBox.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="pack://application:,,,/IconTool;component/Themes/TextBox.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
+            <converter:String2GeometryConverter x:Key="String2GeometryConverter"></converter:String2GeometryConverter>
+            <converter:Geometry2StringConverter x:Key="Geometry2StringConverter"></converter:Geometry2StringConverter>
         </ResourceDictionary>
     </Application.Resources>
 </prism:PrismApplication>

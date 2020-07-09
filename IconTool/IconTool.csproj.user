@@ -12,10 +12,19 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Themes\ComboBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Themes\Generic.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Themes\ListBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Themes\Pagination.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Themes\TextBox.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\MainWindow.xaml">
