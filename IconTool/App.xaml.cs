@@ -1,13 +1,9 @@
-﻿using IconTool.Views;
+﻿using IconTool.ViewModels;
+using IconTool.Views;
 using Prism.Ioc;
 using Prism.Unity;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace IconTool
 {
@@ -16,6 +12,14 @@ namespace IconTool
     /// </summary>
     public partial class App : PrismApplication
     {
+        public static Dispatcher UIDispatcher { get; private set; }
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            UIDispatcher = Current.Dispatcher;
+            base.OnStartup(e);
+        }
+
         protected override Window CreateShell()
         {
             return Container.Resolve<MainWindow>();
@@ -23,7 +27,7 @@ namespace IconTool
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            
+            containerRegistry.RegisterSingleton(typeof(MainWindowViewModel));
         }
     }
 }

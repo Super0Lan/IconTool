@@ -36,7 +36,7 @@ namespace IconTool.ViewModels
             { "精美","complex"},
         };
 
-
+        #region 页面绑定属性
         private string _tag;
         public string Tag
         {
@@ -50,44 +50,72 @@ namespace IconTool.ViewModels
             }
         }
 
+        /// <summary>
+        /// 总数量
+        /// </summary>
+        private int _count;
+        public int Count { get { return _count; } set { SetProperty(ref _count, value); } }
 
+        /// <summary>
+        /// 当前页码
+        /// </summary>
+        private int _page = 1;
+        public int Page
+        {
+            get
+            {
+                return _page;
+            }
+            set
+            {
+                SetProperty(ref _page, value, RefreshIcons);
+            }
+        }
 
 
         private string _searchText;
-        public string SearchText { get { return _searchText; } set {
-                if (SetProperty(ref _searchText, value)) {
+        public string SearchText
+        {
+            get { return _searchText; }
+            set
+            {
+                if (SetProperty(ref _searchText, value))
+                {
                     RefreshIcons();
                 }
-            } 
+            }
         }
 
         private string _colorType;
-        public string ColorType { get { return _colorType; } set 
-            {
-                if (SetProperty(ref _colorType, value)) {
-                    RefreshIcons();
-                }
-            } 
-        }
-
-        private void RefreshIcons()
+        public string ColorType
         {
-            if (_isLoaded) {
-                var res = HttpClientHelper.Post<ResultModel<IconCollection>>(SearchText, FromType, ColorType,Tag);
-                if (res.IsSuccess)
+            get { return _colorType; }
+            set
+            {
+                if (SetProperty(ref _colorType, value))
                 {
-                    Items = res.Data.Icons;
+                    RefreshIcons();
                 }
             }
         }
 
         private string _fromType;
-        public string FromType { get { return _fromType; } set {
-                if (SetProperty(ref _fromType, value)) {
+        public string FromType
+        {
+            get { return _fromType; }
+            set
+            {
+                if (SetProperty(ref _fromType, value))
+                {
                     RefreshIcons();
-                }    
-            } 
+                }
+            }
         }
+
+        private bool _isLoading = false;
+        public bool IsLoading { get { return _isLoading; } set { SetProperty(ref _isLoading, value); } }
+        #endregion
+
 
 
         private List<IconItem> _items;
@@ -110,9 +138,40 @@ namespace IconTool.ViewModels
             RefreshIcons();
         }
 
+        private void RefreshIcons()
+        {
+            if (_isLoaded)
+            {
+                IsLoading = true;
+                Task.Run(() =>
+                {
+                    try
+                    {
+                        var res = HttpClientHelper.Post<ResultModel<IconCollection>>(SearchText, FromType, ColorType, Tag, Page);
+                        if (res.IsSuccess)
+                        {
+                            App.UIDispatcher.Invoke(() =>
+                            {
+                                Items = res.Data.Icons;
+                                Count = res.Data.Count;
+                            });
+
+                        }
+                    }
+                    finally {
+                        App.UIDispatcher.Invoke(() =>
+                        {
+                            IsLoading = false;
+                        });
+                    }
+
+                });
+            }
+        }
+
         private void OnClickCopyPath(string obj)
         {
-            Clipboard.SetDataObject(string.IsNullOrEmpty(obj)? "": $"<Path Width=\"36\" Height=\"36\" Stretch=\"Uniform\" Fill=\"Black\" Data=\"{obj}\"></Path>");
+            Clipboard.SetDataObject(string.IsNullOrEmpty(obj) ? "" : $"<Path Width=\"36\" Height=\"36\" Stretch=\"Uniform\" Fill=\"Black\" Data=\"{obj}\"></Path>");
         }
     }
 }

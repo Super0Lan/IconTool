@@ -47,10 +47,11 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Grid>
+    <Grid local:Assists.Loading="{Binding IsLoading}">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <WrapPanel ItemHeight="70" Background="#F0F0F0">
             <ComboBox x:Name="fromCollection" SelectedValuePath="Value" SelectedIndex="0" Margin="20 0 0 0" Width="160" Height="30" ItemsSource="{Binding FromCollection}" DisplayMemberPath="Key" SelectedValue="{Binding FromType,Mode=TwoWay}">
@@ -80,6 +81,12 @@
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
         </ListBox>
-        <local:Pagination Width="100" Height="30" Background="Red"></local:Pagination>
+
+        <local:Pagination Grid.Row="2" PageSize="54" Margin="0 0 10 10"
+                          Total="{Binding Count}"
+                          CurrentPage="{Binding Page,Mode=TwoWay}" 
+                          VerticalAlignment="Bottom" 
+                          HorizontalAlignment="Right"
+                          ></local:Pagination>
     </Grid>
 </Window>

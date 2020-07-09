@@ -10,8 +10,8 @@ namespace IconTool.Helper
 {
     public static class HttpClientHelper
     {
-        public static T Post<T>(string param,string fromCollection = "-1",string colorType = "",string tag= null) {
-            using (HttpClient client = new HttpClient())
+        public static T Post<T>(string param,string fromCollection = "-1",string colorType = "",string tag= null,int currentPage = 1) {
+            using (var client = HttpClientFactory.Create())
             {
                 client.DefaultRequestHeaders.Add("authority", "www.iconfont.cn");
                 client.DefaultRequestHeaders.Add("accept", "application/json, text/javascript, */*; q=0.01");
@@ -28,7 +28,7 @@ namespace IconTool.Helper
                 var paramDic = new Dictionary<string, string>{
                         { "q",string.IsNullOrEmpty(param) ? "iconfont":param},
                         { "sortType","updated_at"},
-                        { "page","1"},
+                        { "page",currentPage.ToString()},
                         { "pageSize","54"},
                         { "fromCollection",fromCollection},
                         { "fills",colorType},
