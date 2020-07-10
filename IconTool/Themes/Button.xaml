@@ -1,0 +1,31 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:IconTool">
+    <Style TargetType="Button" x:Key="IconHoverButton">
+        <Setter Property="Width" Value="{DynamicResource ControlWidth}"></Setter>
+        <Setter Property="Height" Value="{DynamicResource ControlHeight}"></Setter>
+        <Setter Property="BorderBrush" Value="Transparent"></Setter>
+        <Setter Property="Foreground" Value="White"></Setter>
+        <Setter Property="Cursor" Value="Hand"></Setter>
+        <Setter Property="Background" Value="Transparent"></Setter>
+        <Setter Property="local:Assists.Icon" Value="Cart"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding local:Assists.CornerRadius}"
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Path Width="{DynamicResource Icon.Size}" Height="{DynamicResource Icon.Size}" Stretch="Uniform" Fill="{TemplateBinding Foreground}"
+                              local:Assists.Icon="{TemplateBinding local:Assists.Icon}"></Path>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#0D0A31"></Setter>
+                <Setter Property="Foreground" Value="{DynamicResource ThemeColor}"></Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

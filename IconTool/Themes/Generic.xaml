@@ -4,8 +4,8 @@
     xmlns:local="clr-namespace:IconTool" 
     xmlns:sys="clr-namespace:System;assembly=System.Runtime">
     
-    <sys:Double x:Key="ControlHeight">40</sys:Double>
-    <sys:Double x:Key="ControlWidth">180</sys:Double>
+    <sys:Double x:Key="ControlHeight">35</sys:Double>
+    <sys:Double x:Key="ControlWidth">100</sys:Double>
 
     <SolidColorBrush x:Key="ThemeColor" Color="#FF0000"></SolidColorBrush>
     <SolidColorBrush x:Key="BorderBrush" Color="#dcdfe6"></SolidColorBrush>

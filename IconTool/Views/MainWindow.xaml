@@ -8,8 +8,9 @@
         xmlns:converter="clr-namespace:IconTool.Converter"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:local="clr-namespace:IconTool"
-        mc:Ignorable="d" Height="800" Width="940"
-        Title="MainWindow" MinHeight="800" MinWidth="940" x:Name="mainWindow">
+        xmlns:views ="clr-namespace:IconTool.Views"
+        mc:Ignorable="d" Height="850" Width="1010"
+        Title="MainWindow" MinHeight="850" MinWidth="1010" x:Name="mainWindow">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding LoadedCommand}"></i:InvokeCommandAction>
@@ -17,24 +18,47 @@
     </i:Interaction.Triggers>
     <Window.Resources>
         <Style TargetType="ListBoxItem" x:Key="IconItem">
+            <Setter Property="Margin" Value="5"></Setter>
             <Setter Property="Width" Value="100"></Setter>
-            <Setter Property="Height" Value="105"></Setter>
+            <Setter Property="Height" Value="100"></Setter>
+            <Setter Property="Background" Value="Transparent"></Setter>
+            <Setter Property="BorderBrush" Value="Transparent"></Setter>
+            <Setter Property="BorderThickness" Value="1"></Setter>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBoxItem">
-                        <Grid  Background="Transparent">
-                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <Path x:Name="pth" Width="36" Height="36" Stretch="Uniform" Fill="Black" Data="{Binding Prototype_svg,Converter={StaticResource String2GeometryConverter}}"></Path>
-                                <Label Content="{Binding Name}" HorizontalContentAlignment="Center"></Label>
-                            </StackPanel>
-                            <Border Visibility="Collapsed" x:Name="border" Background="#0D0A31">
-                                <Button Content="复制" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window},Path=DataContext.CopyPathCommand}" CommandParameter="{Binding ElementName=pth,Path=Data,Converter={StaticResource Geometry2StringConverter}}"></Button>
-                            </Border>
-                        </Grid>
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" 
+                                Background="{TemplateBinding Background}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <Grid Background="{TemplateBinding Background}">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Path x:Name="pth" Width="36" Height="36" Stretch="Uniform" Fill="Black" Data="{Binding PrototypeSvg,Converter={StaticResource String2GeometryConverter}}"></Path>
+                                    <Label Content="{Binding Name}" HorizontalContentAlignment="Center"></Label>
+                                </StackPanel>
+                                <Border CornerRadius="{DynamicResource LargeCorner}" Visibility="Collapsed" Background="#242245" x:Name="border" Opacity="0.9"></Border>
+                                <StackPanel VerticalAlignment="Center" Background="Transparent" Visibility="Collapsed" x:Name="btnPanel">
+                                    <Button local:Assists.Icon="CartEmpty" ToolTip="添加入库" Style="{StaticResource IconHoverButton}" 
+                                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window},Path=DataContext.ChangeCartCommand}" 
+                                            CommandParameter="{Binding Id}"></Button>
+                                    <Button ToolTip="收藏" local:Assists.Icon="Flow" Style="{StaticResource IconHoverButton}" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window},Path=DataContext.ChangeCartCommand}" 
+                                            CommandParameter="{Binding Id}"></Button>
+                                    <Button ToolTip="复制成Xaml" local:Assists.Icon="Copy" Style="{StaticResource IconHoverButton}" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window},Path=DataContext.CopyPathCommand}" 
+                                            CommandParameter="{Binding PrototypeSvg}"></Button>
+                                </StackPanel>
+                                <Rectangle RadiusX="4" RadiusY="4" x:Name="rec"
+                                   Stroke="#666" Visibility="Collapsed"
+                                   StrokeDashArray="5,2,1,2"
+                                   StrokeThickness="{TemplateBinding BorderThickness}"/>
+                            </Grid>
+                        </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="border" Property="Visibility" Value="Visible"></Setter>
+                                <Setter TargetName="btnPanel" Property="Visibility" Value="Visible"></Setter>
                             </Trigger>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self},Path=DataContext.IsCollected}" Value="true">
+                                <Setter TargetName="rec" Property="Visibility" Value="Visible"></Setter>
+                            </DataTrigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -70,24 +94,25 @@
             </ListBox>
             <TextBox local:Assists.Icon="Magnifier" local:Assists.IconPosition="Right" 
                      local:Assists.PlaceHolder="请搜索图标"
-                     Margin="10 0 0 0" Width="140" Height="35" 
+                     Margin="20 0 0 0" Width="140" Height="35" 
                      Text="{Binding SearchText,Mode=TwoWay}" 
                      VerticalContentAlignment="Center"></TextBox>
         </WrapPanel>
-        <ListBox Margin="0 10 0 0" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  ItemsSource="{Binding Items}" Grid.Row="1" ItemContainerStyle="{StaticResource IconItem}">
+        <ListBox Margin="0 10 0 0" BorderThickness="0" 
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                 ItemsSource="{Binding Items}" 
+                 Grid.Row="1" 
+                 ItemContainerStyle="{StaticResource IconItem}">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel Width="{Binding ElementName=mainWindow,Path=Width}">
-
-                    </WrapPanel>
+                    <WrapPanel Width="{Binding ElementName=mainWindow,Path=Width}"></WrapPanel>
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
         </ListBox>
 
-        <local:Pagination Grid.Row="2" PageSize="54" Margin="0 0 10 10"
+        <local:Pagination Grid.Row="2" PageSize="54" Margin="0 0 10 30"
                           Total="{Binding Count}"
                           CurrentPage="{Binding Page,Mode=TwoWay}" 
-                          VerticalAlignment="Bottom" 
                           HorizontalAlignment="Right"
                           ></local:Pagination>
     </Grid>

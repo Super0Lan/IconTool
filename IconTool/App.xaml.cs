@@ -29,5 +29,11 @@ namespace IconTool
         {
             containerRegistry.RegisterSingleton(typeof(MainWindowViewModel));
         }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            Settings.Default.Save();
+            base.OnExit(e);
+        }
     }
 }

@@ -212,6 +212,9 @@ namespace IconTool
                 SetCurrentValue(VisibilityProperty, Visibility.Collapsed);
                 return;
             }
+            else {
+                SetCurrentValue(VisibilityProperty, Visibility.Visible);
+            }
             var currentPage = CurrentPage;
             var pagerCount = PagerCount;
 

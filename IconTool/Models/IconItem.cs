@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace IconTool.Model
+namespace Models
 {
     public class IconItem
     {
@@ -98,7 +96,8 @@ namespace IconTool.Model
         public string Show_svg { get; set; }
     }
 
-    public class IconCollection { 
+    public class IconCollection
+    {
         public List<IconItem> Icons { get; set; }
 
         public int Count { get; set; }

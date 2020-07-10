@@ -4,7 +4,7 @@
     <Style TargetType="{x:Type local:PaginationButton}">
         <Setter Property="MinHeight" Value="30"></Setter>
         <Setter Property="MinWidth" Value="30"></Setter>
-        <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:Pagination}},Path=Background}"></Setter>
+        <Setter Property="Background" Value="Transparent"></Setter>
         <Setter Property="Foreground" Value="Black"></Setter>
         <Setter Property="Margin" Value="0,0,10,0"></Setter>
         <Setter Property="Padding" Value="5 0"></Setter>

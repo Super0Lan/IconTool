@@ -1,12 +1,12 @@
 ﻿using IconTool.Helper;
-using IconTool.Model;
+using IconTool.Models;
+using Models;
+using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Mvvm;
-using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -68,7 +68,9 @@ namespace IconTool.ViewModels
             }
             set
             {
-                SetProperty(ref _page, value, RefreshIcons);
+                SetProperty(ref _page, value, ()=> {
+                    RefreshIcons(value);
+                });
             }
         }
 
@@ -116,20 +118,57 @@ namespace IconTool.ViewModels
         public bool IsLoading { get { return _isLoading; } set { SetProperty(ref _isLoading, value); } }
         #endregion
 
+        /// <summary>
+        /// 库
+        /// </summary>
+        public ObservableCollection<IconItemViewModel> IconCarts { get; set; } = new ObservableCollection<IconItemViewModel>();
 
+        /// <summary>
+        /// 图标集合
+        /// </summary>
+        public ObservableCollection<IconItemViewModel> Items { get; set; } = new ObservableCollection<IconItemViewModel>();
 
-        private List<IconItem> _items;
-        public List<IconItem> Items { get { return _items; } set { SetProperty(ref _items, value); } }
 
         public DelegateCommand<string> CopyPathCommand { get; private set; }
 
         public ICommand LoadedCommand { get; private set; }
 
+        public DelegateCommand<int?> ChangeCartCommand { get; private set; }
+
+
+
         public MainWindowViewModel()
         {
             CopyPathCommand = new DelegateCommand<string>(OnClickCopyPath);
             LoadedCommand = new DelegateCommand(OnLoaded);
+            ChangeCartCommand = new DelegateCommand<int?>(OnChangeCart);
+            IconCarts.CollectionChanged += IconCarts_CollectionChanged;
+
+            ///加载用户数据
+            if (!string.IsNullOrEmpty(Settings.Default.IconCarts)) {
+                IconCarts.AddRange(JsonConvert.DeserializeObject<List<IconItemViewModel>>(Settings.Default.IconCarts));
+            }
+
         }
+
+        private void IconCarts_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            Settings.Default.IconCarts = JsonConvert.SerializeObject(IconCarts);
+        }
+
+        private void OnChangeCart(int? id)
+        {
+            var cartItem = Items.FirstOrDefault(x => x.Id == id);
+            cartItem.IsCollected = !cartItem.IsCollected;
+            if (cartItem.IsCollected)
+            {
+                IconCarts.Add(cartItem);
+            }
+            else {
+                IconCarts.Remove(IconCarts.FirstOrDefault(x => x.Id == id));
+            }
+        }
+
         private bool _isLoaded = false;
 
         private void OnLoaded()
@@ -138,7 +177,7 @@ namespace IconTool.ViewModels
             RefreshIcons();
         }
 
-        private void RefreshIcons()
+        private void RefreshIcons(int page = 1)
         {
             if (_isLoaded)
             {
@@ -147,13 +186,22 @@ namespace IconTool.ViewModels
                 {
                     try
                     {
-                        var res = HttpClientHelper.Post<ResultModel<IconCollection>>(SearchText, FromType, ColorType, Tag, Page);
+                        var res = HttpClientHelper.Post<ResultModel<IconCollection>>(SearchText, FromType, ColorType, Tag, page);
                         if (res.IsSuccess)
                         {
                             App.UIDispatcher.Invoke(() =>
                             {
-                                Items = res.Data.Icons;
                                 Count = res.Data.Count;
+                                Items.Clear();
+                                foreach (var icon in res.Data.Icons) {
+                                    Items.Add(new IconItemViewModel() { 
+                                        Id = icon.Id,
+                                        Name = icon.Name,
+                                        PrototypeSvg = icon.Prototype_svg,
+                                        IsCollected = IconCarts.Any(x=>x.Id == icon.Id),
+                                    });
+                                };
+                                Page = page;
                             });
 
                         }
