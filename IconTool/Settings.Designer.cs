@@ -34,5 +34,17 @@ namespace IconTool {
                 this["IconCarts"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MyCollection {
+            get {
+                return ((string)(this["MyCollection"]));
+            }
+            set {
+                this["MyCollection"] = value;
+            }
+        }
     }
 }

@@ -4,6 +4,7 @@ using Models;
 using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Mvvm;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -124,6 +125,11 @@ namespace IconTool.ViewModels
         public ObservableCollection<IconItemViewModel> IconCarts { get; set; } = new ObservableCollection<IconItemViewModel>();
 
         /// <summary>
+        /// 我的收藏
+        /// </summary>
+        public ObservableCollection<IconItemViewModel> MyCollection { get; set; } = new ObservableCollection<IconItemViewModel>();
+
+        /// <summary>
         /// 图标集合
         /// </summary>
         public ObservableCollection<IconItemViewModel> Items { get; set; } = new ObservableCollection<IconItemViewModel>();
@@ -135,6 +141,8 @@ namespace IconTool.ViewModels
 
         public DelegateCommand<int?> ChangeCartCommand { get; private set; }
 
+        public DelegateCommand<int?> ChangeCollectionCommand { get; private set; }
+
 
 
         public MainWindowViewModel()
@@ -142,13 +150,42 @@ namespace IconTool.ViewModels
             CopyPathCommand = new DelegateCommand<string>(OnClickCopyPath);
             LoadedCommand = new DelegateCommand(OnLoaded);
             ChangeCartCommand = new DelegateCommand<int?>(OnChangeCart);
-            IconCarts.CollectionChanged += IconCarts_CollectionChanged;
+            ChangeCollectionCommand = new DelegateCommand<int?>(OnCollectionChanged);
 
-            ///加载用户数据
+
+            IconCarts.CollectionChanged += IconCarts_CollectionChanged;
+            MyCollection.CollectionChanged += MyCollection_CollectionChanged;
+
+            ///加载用户数据库
             if (!string.IsNullOrEmpty(Settings.Default.IconCarts)) {
                 IconCarts.AddRange(JsonConvert.DeserializeObject<List<IconItemViewModel>>(Settings.Default.IconCarts));
             }
 
+            ///加载用户数据收藏夹
+            if (!string.IsNullOrEmpty(Settings.Default.MyCollection))
+            {
+                MyCollection.AddRange(JsonConvert.DeserializeObject<List<IconItemViewModel>>(Settings.Default.MyCollection));
+            }
+
+        }
+
+        private void MyCollection_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            Settings.Default.MyCollection = JsonConvert.SerializeObject(MyCollection);
+        }
+
+        private void OnCollectionChanged(int? id)
+        {
+            var cartItem = Items.FirstOrDefault(x => x.Id == id);
+            cartItem.IsFavorite = !cartItem.IsFavorite;
+            if (cartItem.IsFavorite)
+            {
+                MyCollection.Add(cartItem);
+            }
+            else
+            {
+                MyCollection.Remove(MyCollection.FirstOrDefault(x => x.Id == id));
+            }
         }
 
         private void IconCarts_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -199,6 +236,7 @@ namespace IconTool.ViewModels
                                         Name = icon.Name,
                                         PrototypeSvg = icon.Prototype_svg,
                                         IsCollected = IconCarts.Any(x=>x.Id == icon.Id),
+                                        IsFavorite = MyCollection.Any(x=>x.Id == icon.Id),
                                     });
                                 };
                                 Page = page;

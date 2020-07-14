@@ -61,6 +61,7 @@
 
 
     <Style TargetType="{x:Type local:Pagination}">
+        <Setter Property="Background" Value="Transparent"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:Pagination}">

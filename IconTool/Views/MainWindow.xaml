@@ -37,10 +37,11 @@
                                 </StackPanel>
                                 <Border CornerRadius="{DynamicResource LargeCorner}" Visibility="Collapsed" Background="#242245" x:Name="border" Opacity="0.9"></Border>
                                 <StackPanel VerticalAlignment="Center" Background="Transparent" Visibility="Collapsed" x:Name="btnPanel">
-                                    <Button local:Assists.Icon="CartEmpty" ToolTip="添加入库" Style="{StaticResource IconHoverButton}" 
+                                    <Button local:Assists.Icon="CartEmpty" x:Name="BtnCart" ToolTip="添加入库" Style="{StaticResource IconHoverButton}" 
                                             Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window},Path=DataContext.ChangeCartCommand}" 
                                             CommandParameter="{Binding Id}"></Button>
-                                    <Button ToolTip="收藏" local:Assists.Icon="Flow" Style="{StaticResource IconHoverButton}" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window},Path=DataContext.ChangeCartCommand}" 
+                                    <Button ToolTip="收藏" x:Name="BtnFavorite" local:Assists.Icon="Favorite" Style="{StaticResource IconHoverButton}" 
+                                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window},Path=DataContext.ChangeCollectionCommand}" 
                                             CommandParameter="{Binding Id}"></Button>
                                     <Button ToolTip="复制成Xaml" local:Assists.Icon="Copy" Style="{StaticResource IconHoverButton}" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window},Path=DataContext.CopyPathCommand}" 
                                             CommandParameter="{Binding PrototypeSvg}"></Button>
@@ -58,6 +59,10 @@
                             </Trigger>
                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self},Path=DataContext.IsCollected}" Value="true">
                                 <Setter TargetName="rec" Property="Visibility" Value="Visible"></Setter>
+                                <Setter TargetName="BtnCart" Property="local:Assists.Icon" Value="Cart"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self},Path=DataContext.IsFavorite}" Value="true">
+                                <Setter TargetName="BtnFavorite" Property="local:Assists.Icon" Value="FavoriteFilled"></Setter>
                             </DataTrigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
