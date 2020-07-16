@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
 
-namespace IconTool
+namespace IconTool.Controls
 {
     public abstract class BaseAdorner : Adorner
     {

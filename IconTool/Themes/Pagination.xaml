@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:IconTool">
+                    xmlns:local="clr-namespace:IconTool.Controls">
     <Style TargetType="{x:Type local:PaginationButton}">
         <Setter Property="MinHeight" Value="30"></Setter>
         <Setter Property="MinWidth" Value="30"></Setter>

@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace IconTool
+namespace IconTool.Controls
 {
     public class PaginationButton : Button
     {

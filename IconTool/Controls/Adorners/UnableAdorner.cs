@@ -6,7 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace IconTool
+namespace IconTool.Controls
 {
     public class UnableAdorner : BaseAdorner
     {

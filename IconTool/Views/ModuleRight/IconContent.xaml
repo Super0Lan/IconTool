@@ -1,0 +1,121 @@
+﻿<UserControl x:Class="IconTool.Views.ModuleRight.IconContent"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:local="clr-namespace:IconTool.Controls"
+             xmlns:prism ="http://www.codeplex.com/prism"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="850" d:DesignWidth="1010">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}"></i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <UserControl.Resources>
+        <Style TargetType="ListBoxItem" x:Key="IconItem">
+            <Setter Property="Margin" Value="5"></Setter>
+            <Setter Property="Width" Value="100"></Setter>
+            <Setter Property="Height" Value="100"></Setter>
+            <Setter Property="Background" Value="Transparent"></Setter>
+            <Setter Property="BorderBrush" Value="Transparent"></Setter>
+            <Setter Property="BorderThickness" Value="1"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" 
+                                Background="{TemplateBinding Background}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <Grid Background="{TemplateBinding Background}">
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Path x:Name="pth" Width="36" Height="36" Stretch="Uniform" Fill="Black" Data="{Binding PrototypeSvg,Converter={StaticResource String2GeometryConverter}}"></Path>
+                                    <Label Content="{Binding Name}" HorizontalContentAlignment="Center"></Label>
+                                </StackPanel>
+                                <Border CornerRadius="{DynamicResource LargeCorner}" Visibility="Collapsed" Background="#242245" x:Name="border" Opacity="0.9"></Border>
+                                <StackPanel VerticalAlignment="Center" Background="Transparent" Visibility="Collapsed" x:Name="btnPanel">
+                                    <Button local:IconAssists.Icon="CartEmpty" x:Name="BtnCart" ToolTip="添加入库" Style="{StaticResource IconHoverButton}" 
+                                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window},Path=DataContext.ChangeCartCommand}" 
+                                            CommandParameter="{Binding Id}"></Button>
+                                    <Button ToolTip="收藏" x:Name="BtnFavorite" local:IconAssists.Icon="Favorite" Style="{StaticResource IconHoverButton}" 
+                                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window},Path=DataContext.ChangeCollectionCommand}" 
+                                            CommandParameter="{Binding Id}"></Button>
+                                    <Button ToolTip="复制成Xaml" local:IconAssists.Icon="Copy" Style="{StaticResource IconHoverButton}" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window},Path=DataContext.CopyPathCommand}" 
+                                            CommandParameter="{Binding PrototypeSvg}"></Button>
+                                </StackPanel>
+                                <Rectangle  RadiusX="4" RadiusY="4" x:Name="rec"
+                                   Stroke="#666" Visibility="Collapsed"
+                                   StrokeDashArray="5,2,1,2"
+                                   StrokeThickness="{TemplateBinding BorderThickness}"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Visibility" Value="Visible"></Setter>
+                                <Setter TargetName="btnPanel" Property="Visibility" Value="Visible"></Setter>
+                            </Trigger>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self},Path=DataContext.IsCollected}" Value="true">
+                                <Setter TargetName="rec" Property="Visibility" Value="Visible"></Setter>
+                                <Setter TargetName="BtnCart" Property="local:IconAssists.Icon" Value="Cart"></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self},Path=DataContext.IsFavorite}" Value="true">
+                                <Setter TargetName="BtnFavorite" Property="local:IconAssists.Icon" Value="FavoriteFilled"></Setter>
+                            </DataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid local:Assists.Loading="{Binding IsLoading}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <WrapPanel ItemHeight="70" Background="#F0F0F0">
+            <ComboBox x:Name="fromCollection" SelectedValuePath="Value" SelectedIndex="0" Margin="20 0 0 0" ItemsSource="{Binding FromCollection}" DisplayMemberPath="Key" SelectedValue="{Binding FromType,Mode=TwoWay}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding CollectionChangedCommand}" CommandParameter="{Binding ElementName=fromCollection,Path=SelectedItem}"></i:InvokeCommandAction>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ComboBox>
+            <ComboBox Margin="20 0 0 0" SelectedValuePath="Value" SelectedIndex="0" ItemsSource="{Binding Fills}" DisplayMemberPath="Key" SelectedValue="{Binding ColorType,Mode=TwoWay}">
+            </ComboBox>
+            <ListBox DisplayMemberPath="Key" SelectedValuePath="Value" Background="Transparent"
+                     ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                     ScrollViewer.VerticalScrollBarVisibility="Hidden" Foreground="#7f7f7f"
+                     SelectedIndex="0" SelectedValue="{Binding Tag}" ItemsSource="{Binding Tags}" 
+                     Margin="20 0 0 0" VerticalAlignment="Center" BorderThickness="0">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel></WrapPanel>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+            <TextBox local:IconAssists.Icon="Magnifier" local:IconAssists.Position="Right" 
+                     local:Assists.PlaceHolder="请搜索图标"
+                     Margin="20 0 0 0" Width="140" Height="35" 
+                     Text="{Binding SearchText,Mode=TwoWay}" 
+                     VerticalContentAlignment="Center"></TextBox>
+        </WrapPanel>
+        <ListBox Margin="0 10 0 0" BorderThickness="0" 
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                 ItemsSource="{Binding Items}" 
+                 Grid.Row="1" 
+                 ItemContainerStyle="{StaticResource IconItem}">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Width="{Binding ElementName=mainWindow,Path=Width}"></WrapPanel>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+        </ListBox>
+        <local:Pagination Grid.Row="2" PageSize="54" Margin="0 0 10 30"
+                          Total="{Binding Count}"
+                          CurrentPage="{Binding Page,Mode=TwoWay}" 
+                          HorizontalAlignment="Right"
+                          ></local:Pagination>
+    </Grid>
+</UserControl>

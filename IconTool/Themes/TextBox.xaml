@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:lib="clr-namespace:IconTool">
+                    xmlns:lib="clr-namespace:IconTool.Controls">
     <Style TargetType="Button" x:Key="ClearButton">
         <Setter Property="Foreground" Value="#c0c4cc"></Setter>
         <Setter Property="Background" Value="Transparent"></Setter>
@@ -31,7 +31,7 @@
         <Setter Property="Width" Value="{DynamicResource ControlWidth}"></Setter>
         <Setter Property="Height" Value="{DynamicResource ControlHeight}"></Setter>
         <Setter Property="lib:Assists.CornerRadius" Value="{DynamicResource LargeCorner}"></Setter>
-        <Setter Property="lib:Assists.IconBrush" Value="{DynamicResource BorderBrush}"></Setter>
+        <Setter Property="lib:IconAssists.Fill" Value="{DynamicResource BorderBrush}"></Setter>
         <Setter Property="Cursor" Value="Hand"></Setter>
         <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
         <Setter Property="Padding" Value="0"></Setter>
@@ -58,7 +58,7 @@
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="1" Margin="0 0 5 0" x:Name="iconPanel" Width="{DynamicResource Icon.Size}" Height="{DynamicResource Icon.Size}">
-                                <Path HorizontalAlignment="Center" Stretch="Uniform" Fill="{TemplateBinding lib:Assists.IconBrush}" lib:Assists.Icon="{TemplateBinding lib:Assists.Icon}"></Path>
+                                <Path HorizontalAlignment="Center" Stretch="Uniform" Fill="{TemplateBinding lib:IconAssists.Fill}" lib:IconAssists.Icon="{TemplateBinding lib:IconAssists.Icon}"></Path>
                                 <ContentPresenter></ContentPresenter>
                             </Grid>
                             <ContentControl Grid.Column="2" x:Name="placeHolder" Visibility="Collapsed" IsHitTestVisible="False" TextBlock.Foreground="{TemplateBinding lib:Assists.PlaceHolderBrush}"
@@ -98,10 +98,10 @@
                         <Trigger SourceName="clearButton" Property="IsPressed" Value="True">
                             <Setter Property="Text" Value="{x:Null}"></Setter>
                         </Trigger>
-                        <Trigger Property="lib:Assists.Icon" Value="Default">
+                        <Trigger Property="lib:IconAssists.Icon" Value="Default">
                             <Setter TargetName="iconPanel"  Property="Visibility" Value="Collapsed"></Setter>
                         </Trigger>
-                        <Trigger Property="lib:Assists.IconPosition" Value="Right">
+                        <Trigger Property="lib:IconAssists.Position" Value="Right">
                             <Setter TargetName="iconPanel" Property="Grid.Column" Value="3"></Setter>
                         </Trigger>
                     </ControlTemplate.Triggers>

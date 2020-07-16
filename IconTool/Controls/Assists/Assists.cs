@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace IconTool
+namespace IconTool.Controls
 {
     public class Assists
     {
@@ -107,79 +107,6 @@ namespace IconTool
         public static readonly DependencyProperty PlaceHolderBrushProperty =
             DependencyProperty.RegisterAttached("PlaceHolderBrush", typeof(Brush), typeof(Assists), new PropertyMetadata(new BrushConverter().ConvertFromString("#dcdfe6")));
         #endregion
-
-        #endregion
-
-        #region 图标Icon
-
-
-        public static EnumIcon GetIcon(DependencyObject obj)
-        {
-            return (EnumIcon)obj.GetValue(IconProperty);
-        }
-
-        public static void SetIcon(DependencyObject obj, EnumIcon value)
-        {
-            obj.SetValue(IconProperty, value);
-        }
-
-        // Using a DependencyProperty as the backing store for Icon.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty IconProperty =
-            DependencyProperty.RegisterAttached("Icon", typeof(EnumIcon), typeof(Assists), new PropertyMetadata(default(EnumIcon), IconPropertyChanged));
-
-        private static void IconPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is Path path)
-            {
-                if (Enum.TryParse(e.NewValue.ToString(), out EnumIcon icon))
-                {
-                    var source = Geometry.Parse(IconDataFactory.IconDic[icon]);
-                    path.Data = source;
-                }
-            }
-        }
-
-
-
-
-        public static Brush GetIconBrush(DependencyObject obj)
-        {
-            return (Brush)obj.GetValue(IconBrushProperty);
-        }
-
-        public static void SetIconBrush(DependencyObject obj, Brush value)
-        {
-            obj.SetValue(IconBrushProperty, value);
-        }
-
-        // Using a DependencyProperty as the backing store for IconBrush.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty IconBrushProperty =
-            DependencyProperty.RegisterAttached("IconBrush", typeof(Brush), typeof(Assists), new PropertyMetadata(Brushes.Black));
-
-
-
-        #endregion
-
-        #region 图标位置
-
-
-
-        public static HorizontalAlignment GetIconPosition(DependencyObject obj)
-        {
-            return (HorizontalAlignment)obj.GetValue(IconPositionProperty);
-        }
-
-        public static void SetIconPosition(DependencyObject obj, HorizontalAlignment value)
-        {
-            obj.SetValue(IconPositionProperty, value);
-        }
-
-        // Using a DependencyProperty as the backing store for IconPosition.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty IconPositionProperty =
-            DependencyProperty.RegisterAttached("IconPosition", typeof(HorizontalAlignment), typeof(Assists), new PropertyMetadata(HorizontalAlignment.Left));
-
-
-
 
         #endregion
 

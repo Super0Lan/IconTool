@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:lib="clr-namespace:IconTool.Controls">
+    <ControlTemplate x:Key="IconButtonTemplate" TargetType="{x:Type Button}">
+        <Border Background="{TemplateBinding Background}" 
+                CornerRadius="{TemplateBinding lib:Assists.CornerRadius}"
+                BorderBrush="{TemplateBinding BorderBrush}" 
+                BorderThickness="{TemplateBinding BorderThickness}">
+            <Path Width="{TemplateBinding lib:IconAssists.Width}" 
+                  Height="{TemplateBinding lib:IconAssists.Height}" 
+                  Stretch="Uniform"
+                  Fill="{TemplateBinding lib:IconAssists.Fill}"
+                  Stroke="{TemplateBinding lib:IconAssists.Stroke}"
+                  lib:IconAssists.Icon="{TemplateBinding lib:IconAssists.Icon}"></Path>
+        </Border>
+    </ControlTemplate>
+</ResourceDictionary>

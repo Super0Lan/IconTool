@@ -1,26 +1,28 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:IconTool">
-    <Style TargetType="Button" x:Key="IconHoverButton">
+                    xmlns:local="clr-namespace:IconTool.Controls">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/IconTool;component/Themes/Template/ButtonTemplate.xaml"></ResourceDictionary>
+    </ResourceDictionary.MergedDictionaries>
+    <Style TargetType="Button" x:Key="IconButton">
+        <Setter Property="Width" Value="{DynamicResource Icon.Size}"></Setter>
+        <Setter Property="Height" Value="{DynamicResource Icon.Size}"></Setter>
+        <Setter Property="local:IconAssists.Width" Value="{DynamicResource Icon.Size}"></Setter>
+        <Setter Property="local:IconAssists.Height" Value="{DynamicResource Icon.Size}"></Setter>
+        <Setter Property="BorderBrush" Value="Transparent"></Setter>
+        <Setter Property="Cursor" Value="Hand"></Setter>
+        <Setter Property="Foreground" Value="{DynamicResource ThemeColor}"></Setter>
+        <Setter Property="Background" Value="Transparent"></Setter>
+        <Setter Property="local:IconAssists.Icon" Value="Default"></Setter>
+        <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="local:IconAssists.Fill" Value="{Binding RelativeSource={RelativeSource Mode=Self},Path=Foreground}"></Setter>
+        <Setter Property="Template" Value="{StaticResource IconButtonTemplate}"></Setter>
+    </Style>
+
+    <Style TargetType="Button" x:Key="IconHoverButton" BasedOn="{StaticResource IconButton}">
         <Setter Property="Width" Value="{DynamicResource ControlWidth}"></Setter>
         <Setter Property="Height" Value="{DynamicResource ControlHeight}"></Setter>
-        <Setter Property="BorderBrush" Value="Transparent"></Setter>
         <Setter Property="Foreground" Value="White"></Setter>
-        <Setter Property="Cursor" Value="Hand"></Setter>
-        <Setter Property="Background" Value="Transparent"></Setter>
-        <Setter Property="local:Assists.Icon" Value="Cart"></Setter>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border Background="{TemplateBinding Background}" CornerRadius="{TemplateBinding local:Assists.CornerRadius}"
-                            BorderBrush="{TemplateBinding BorderBrush}" 
-                            BorderThickness="{TemplateBinding BorderThickness}">
-                        <Path Width="{DynamicResource Icon.Size}" Height="{DynamicResource Icon.Size}" Stretch="Uniform" Fill="{TemplateBinding Foreground}"
-                              local:Assists.Icon="{TemplateBinding local:Assists.Icon}"></Path>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="#0D0A31"></Setter>

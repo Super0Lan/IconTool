@@ -6,6 +6,7 @@
     <UseWPF>true</UseWPF>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <RootNamespace>IconTool</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

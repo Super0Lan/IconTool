@@ -9,6 +9,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Views\ModuleRight\IconContent.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\MainWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -29,7 +32,13 @@
     <Page Update="Themes\Pagination.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Themes\Template\ButtonTemplate.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Themes\TextBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ModuleRight\IconContent.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\MainWindow.xaml">

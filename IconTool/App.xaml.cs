@@ -1,6 +1,7 @@
 ﻿using IconTool.ViewModels;
 using IconTool.Views;
 using Prism.Ioc;
+using Prism.Modularity;
 using Prism.Unity;
 using System.Windows;
 using System.Windows.Threading;
@@ -28,6 +29,11 @@ namespace IconTool
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterSingleton(typeof(MainWindowViewModel));
+        }
+
+        protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
+        {
+           moduleCatalog.AddModule<Views.ModuleRight.ModuleRightModule>();
         }
 
         protected override void OnExit(ExitEventArgs e)
