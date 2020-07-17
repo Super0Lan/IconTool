@@ -3,6 +3,7 @@ using IconTool.Models;
 using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -10,9 +11,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace IconTool.ViewModels
+namespace IconTool.ViewModels.ModuleRight
 {
-    public class IconContentViewModel : BindableBase
+    public class IconContentViewModel : BindableBase, IRegionMemberLifetime
     {
         public Dictionary<string, string> FromCollection { get; set; } = new Dictionary<string, string>() {
             { "所有图标","-1"},
@@ -142,7 +143,7 @@ namespace IconTool.ViewModels
 
         public DelegateCommand<int?> ChangeCollectionCommand { get; private set; }
 
-
+        public bool KeepAlive => true;
 
         public IconContentViewModel()
         {

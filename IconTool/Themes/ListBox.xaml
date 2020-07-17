@@ -20,6 +20,9 @@
                             <Setter Property="Background" Value="{DynamicResource ThemeColor}"></Setter>
                             <Setter Property="Foreground" Value="White"></Setter>
                         </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource ThemeColor}"></Setter>
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

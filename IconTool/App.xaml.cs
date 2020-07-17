@@ -4,6 +4,7 @@ using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Unity;
 using System.Windows;
+using System.Windows.Navigation;
 using System.Windows.Threading;
 
 namespace IconTool
@@ -25,7 +26,6 @@ namespace IconTool
         {
             return Container.Resolve<MainWindow>();
         }
-
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterSingleton(typeof(MainWindowViewModel));

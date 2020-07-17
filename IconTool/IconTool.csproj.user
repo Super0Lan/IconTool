@@ -38,6 +38,9 @@
     <Page Update="Themes\TextBox.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Themes\Window.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\ModuleRight\IconContent.xaml">
       <SubType>Designer</SubType>
     </Page>

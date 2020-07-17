@@ -7,7 +7,7 @@
              xmlns:local="clr-namespace:IconTool.Controls"
              xmlns:prism ="http://www.codeplex.com/prism"
              prism:ViewModelLocator.AutoWireViewModel="True"
-             mc:Ignorable="d" 
+             mc:Ignorable="d" Background="#FCFCFC"
              d:DesignHeight="850" d:DesignWidth="1010">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -74,7 +74,7 @@
             <RowDefinition/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <WrapPanel ItemHeight="70" Background="#F0F0F0">
+        <WrapPanel ItemHeight="45" Background="#F0F0F0">
             <ComboBox x:Name="fromCollection" SelectedValuePath="Value" SelectedIndex="0" Margin="20 0 0 0" ItemsSource="{Binding FromCollection}" DisplayMemberPath="Key" SelectedValue="{Binding FromType,Mode=TwoWay}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
@@ -84,6 +84,11 @@
             </ComboBox>
             <ComboBox Margin="20 0 0 0" SelectedValuePath="Value" SelectedIndex="0" ItemsSource="{Binding Fills}" DisplayMemberPath="Key" SelectedValue="{Binding ColorType,Mode=TwoWay}">
             </ComboBox>
+            <TextBox local:IconAssists.Icon="Magnifier" local:IconAssists.Position="Right" 
+                     local:Assists.PlaceHolder="请搜索图标"
+                     Margin="20 0 0 0" Width="140" Height="35" 
+                     Text="{Binding SearchText,Mode=TwoWay}" 
+                     VerticalContentAlignment="Center"></TextBox>
             <ListBox DisplayMemberPath="Key" SelectedValuePath="Value" Background="Transparent"
                      ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                      ScrollViewer.VerticalScrollBarVisibility="Hidden" Foreground="#7f7f7f"
@@ -95,11 +100,6 @@
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
             </ListBox>
-            <TextBox local:IconAssists.Icon="Magnifier" local:IconAssists.Position="Right" 
-                     local:Assists.PlaceHolder="请搜索图标"
-                     Margin="20 0 0 0" Width="140" Height="35" 
-                     Text="{Binding SearchText,Mode=TwoWay}" 
-                     VerticalContentAlignment="Center"></TextBox>
         </WrapPanel>
         <ListBox Margin="0 10 0 0" BorderThickness="0" 
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
