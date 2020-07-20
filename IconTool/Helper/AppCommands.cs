@@ -23,10 +23,76 @@ namespace IconTool.Helper
             }
         }
 
+        public static ICommand DragMove {
+            get {
+                return _EnsureCommand(EnumCommand.DragMove, () =>
+                {
+                    return new DelegateCommand<Window>((win) =>
+                    {
+                        win.DragMove();
+                        //win.WindowState = WindowState.Maximized;
+                    });
+                });
+            }
+        }
+
+        public static ICommand Maximized {
+            get
+            {
+                return _EnsureCommand(EnumCommand.Maximized, () =>
+                {
+                    return new DelegateCommand<Window>((win) =>
+                    {
+                        win.WindowState = WindowState.Maximized;
+                    });
+                });
+            }
+        }
+
+        public static ICommand Minimized
+        {
+            get
+            {
+                return _EnsureCommand(EnumCommand.Minimized, () =>
+                {
+                    return new DelegateCommand<Window>((win) =>
+                    {
+                        win.WindowState = WindowState.Minimized;
+                    });
+                });
+            }
+        }
+
+        public static ICommand WindowStateNormal
+        {
+            get
+            {
+                return _EnsureCommand(EnumCommand.WindowStateNormal, () =>
+                {
+                    return new DelegateCommand<Window>((win) =>
+                    {
+                        win.WindowState = WindowState.Normal;
+                    });
+                });
+            }
+        }
+
+
+
+
         private enum EnumCommand
         {
             Closed = 0,
-            Last = 1,
+
+            DragMove = 1,
+
+            Maximized,
+
+            Minimized,
+
+            WindowStateNormal,
+
+            Last,
         }
 
         private static ICommand[] _internalCommands = new ICommand[(int)EnumCommand.Last];

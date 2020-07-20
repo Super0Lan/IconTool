@@ -29,7 +29,7 @@ namespace IconTool.Helper
                         { "q",string.IsNullOrEmpty(param) ? "iconfont":param},
                         { "sortType","updated_at"},
                         { "page",currentPage.ToString()},
-                        { "pageSize","54"},
+                        { "pageSize","30"},
                         { "fromCollection",fromCollection},
                         { "fills",colorType},
                         { "t",ConvertDateTimeToInt().ToString()},

@@ -17,6 +17,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Themes\Badge.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Themes\Button.xaml">
       <SubType>Designer</SubType>
     </Page>

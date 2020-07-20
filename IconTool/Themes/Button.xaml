@@ -30,4 +30,15 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+
+    <Style TargetType="Button" x:Key="IconNormalButton" BasedOn="{StaticResource IconButton}">
+        <Setter Property="Width" Value="{DynamicResource ControlWidth}"></Setter>
+        <Setter Property="Height" Value="{DynamicResource ControlHeight}"></Setter>
+        <Setter Property="Foreground" Value="#7D7C8A"></Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="Black"></Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 </ResourceDictionary>

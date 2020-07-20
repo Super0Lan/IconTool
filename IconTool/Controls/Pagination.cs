@@ -49,7 +49,6 @@ namespace IconTool.Controls
     {
         private const string PrevButtonTemplateName = "PART_PREV";
         private const string NextButtonTemplateName = "PART_Next";
-        private const string PageItemsTemplateName = "PART_PAGE";
 
         private Button _prevButton;
         private Button _nextButton;

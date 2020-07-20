@@ -129,5 +129,35 @@ namespace IconTool.Controls
 
 
         #endregion
+
+        #region Badge
+        public static Badge GetBadge(DependencyObject obj)
+        {
+            return (Badge)obj.GetValue(BadgeProperty);
+        }
+
+        public static void SetBadge(DependencyObject obj, Badge value)
+        {
+            obj.SetValue(BadgeProperty, value);
+        }
+
+        // Using a DependencyProperty as the backing store for Badge.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty BadgeProperty =
+            DependencyProperty.RegisterAttached("Badge", typeof(Badge), typeof(Assists), new PropertyMetadata(null, BadgePropertyChanged));
+
+        private static void BadgePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is UIElement uIElement)
+            {
+                if (e.NewValue is Badge badge)
+                {
+                    var adorner = (BadgeAdorber)uIElement.GetOrAddAdorner(typeof(BadgeAdorber));
+                    adorner.SetBadge(badge);
+                }
+            }
+        }
+        #endregion
+
+
     }
 }
