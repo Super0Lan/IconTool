@@ -14,4 +14,54 @@
                   lib:IconAssists.Icon="{TemplateBinding lib:IconAssists.Icon}"></Path>
         </Border>
     </ControlTemplate>
+
+    <ControlTemplate x:Key="ButtonTemplate" TargetType="{x:Type Button}">
+        <Border Background="{TemplateBinding Background}" 
+                CornerRadius="{TemplateBinding lib:Assists.CornerRadius}"
+                BorderBrush="{TemplateBinding BorderBrush}" 
+                BorderThickness="{TemplateBinding BorderThickness}">
+            <ContentPresenter   Margin="{TemplateBinding Padding}"
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+            </ContentPresenter>
+        </Border>
+    </ControlTemplate>
+
+    <ControlTemplate TargetType="{x:Type Button}" x:Key="IconTextButtonTemplate">
+        <Border Background="{TemplateBinding Background}" 
+                CornerRadius="{TemplateBinding lib:Assists.CornerRadius}"
+                BorderBrush="{TemplateBinding BorderBrush}" 
+                BorderThickness="{TemplateBinding BorderThickness}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Path Width="{TemplateBinding lib:IconAssists.Width}" 
+                  Height="{TemplateBinding lib:IconAssists.Height}" 
+                  Stretch="Uniform" Margin="0 0 5 0"
+                  Fill="{TemplateBinding lib:IconAssists.Fill}"
+                  Stroke="{TemplateBinding lib:IconAssists.Stroke}"
+                  lib:IconAssists.Icon="{TemplateBinding lib:IconAssists.Icon}"></Path>
+                <ContentPresenter   Margin="{TemplateBinding Padding}" Grid.Column="1"
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                </ContentPresenter>
+            </Grid>
+        </Border>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="IconToggleButtonTemplate" TargetType="{x:Type ToggleButton}">
+        <Border Background="{TemplateBinding Background}" 
+                CornerRadius="{TemplateBinding lib:Assists.CornerRadius}"
+                BorderBrush="{TemplateBinding BorderBrush}" 
+                BorderThickness="{TemplateBinding BorderThickness}">
+            <Path Width="{TemplateBinding lib:IconAssists.Width}" 
+                  Height="{TemplateBinding lib:IconAssists.Height}" 
+                  Stretch="Uniform"
+                  Fill="{TemplateBinding lib:IconAssists.Fill}"
+                  Stroke="{TemplateBinding lib:IconAssists.Stroke}"
+                  lib:IconAssists.Icon="{TemplateBinding lib:IconAssists.Icon}"></Path>
+        </Border>
+    </ControlTemplate>
 </ResourceDictionary>

@@ -10,6 +10,7 @@
         <Setter Property="FontSize" Value="12"></Setter>
         <Setter Property="Background" Value="{DynamicResource ThemeColor}"></Setter>
         <Setter Property="Height" Value="20"></Setter>
+        <Setter Property="MinWidth" Value="20"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:Badge">

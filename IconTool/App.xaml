@@ -15,9 +15,11 @@
                 <ResourceDictionary Source="pack://application:,,,/IconTool;component/Themes/Button.xaml"></ResourceDictionary>
                 <ResourceDictionary Source="pack://application:,,,/IconTool;component/Themes/Window.xaml"></ResourceDictionary>
                 <ResourceDictionary Source="pack://application:,,,/IconTool;component/Themes/Badge.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="pack://application:,,,/IconTool;component/Themes/ToggleButton.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
             <converter:String2GeometryConverter x:Key="String2GeometryConverter"></converter:String2GeometryConverter>
             <converter:Geometry2StringConverter x:Key="Geometry2StringConverter"></converter:Geometry2StringConverter>
+            <converter:CalculationConverter x:Key="CalculationConverter"></converter:CalculationConverter>
         </ResourceDictionary>
     </Application.Resources>
 </prism:PrismApplication>

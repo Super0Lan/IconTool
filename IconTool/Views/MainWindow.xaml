@@ -11,10 +11,10 @@
         xmlns:model="clr-namespace:IconTool.Models"
         xmlns:helper="clr-namespace:IconTool.Helper"
         mc:Ignorable="d" 
-        Height="680" Width="760" 
+        Height="700" Width="760" 
         Background="Transparent"
         AllowsTransparency="True" Style="{StaticResource WindowStyle}"
-        Title="MainWindow" MinHeight="680" MinWidth="760">
+        Title="MainWindow" MinHeight="700" MinWidth="760">
     <Window.Resources>
         <array:ArrayList x:Key="MenuSource">
             <model:IconToolModel Icon="All" SelectedIcon="AllFilled" Name="图标" Path="IconContent"></model:IconToolModel>
@@ -65,7 +65,7 @@
                 </ListBox.ItemContainerStyle>
             </ListBox>
         </StackPanel>
-        <Border Grid.Column="1" Height="20" Background="#F0F0F0"></Border>
+        <Border Grid.Column="1" Height="30" Background="#F0F0F0"></Border>
         <ContentControl Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" prism:RegionManager.RegionName="ContentRegion" />
     </Grid>
 </Window>

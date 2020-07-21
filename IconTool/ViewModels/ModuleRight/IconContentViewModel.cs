@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -143,6 +144,18 @@ namespace IconTool.ViewModels.ModuleRight
 
         public DelegateCommand<int?> ChangeCollectionCommand { get; private set; }
 
+        public DelegateCommand ClearCartCommand { get; private set; }
+
+        /// <summary>
+        /// 下载素材
+        /// </summary>
+        public DelegateCommand DownloadMaterial { get; private set; }
+
+        /// <summary>
+        /// 下载代码
+        /// </summary>
+        public DelegateCommand DownloadCode { get; private set; }
+
         public bool KeepAlive => true;
 
         public IconContentViewModel()
@@ -151,6 +164,9 @@ namespace IconTool.ViewModels.ModuleRight
             LoadedCommand = new DelegateCommand(OnLoaded);
             ChangeCartCommand = new DelegateCommand<int?>(OnChangeCart);
             ChangeCollectionCommand = new DelegateCommand<int?>(OnCollectionChanged);
+            ClearCartCommand = new DelegateCommand(OnClearCart);
+            DownloadMaterial = new DelegateCommand(OnDownloadMaterial, CanDownload);
+            DownloadCode = new DelegateCommand(OnDownloadCode, CanDownload);
 
 
             IconCarts.CollectionChanged += IconCarts_CollectionChanged;
@@ -170,6 +186,32 @@ namespace IconTool.ViewModels.ModuleRight
 
         }
 
+        private void OnDownloadCode()
+        {
+            
+        }
+
+        private bool CanDownload()
+        {
+            return IconCarts.Count > 0;
+        }
+
+        private void OnDownloadMaterial()
+        {
+            
+        }
+
+        private void OnClearCart()
+        {
+            foreach (var item in IconCarts) {
+                var iconItem = Items.FirstOrDefault(x => x.Id == item.Id);
+                if (iconItem != null) {
+                    iconItem.IsCollected = false;
+                }
+            }
+            IconCarts.Clear();
+        }
+
         private void MyCollection_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             Settings.Default.MyCollection = JsonConvert.SerializeObject(MyCollection);
@@ -178,6 +220,9 @@ namespace IconTool.ViewModels.ModuleRight
         private void OnCollectionChanged(int? id)
         {
             var cartItem = Items.FirstOrDefault(x => x.Id == id);
+            if (cartItem == null) {
+                return;
+            }
             cartItem.IsFavorite = !cartItem.IsFavorite;
             if (cartItem.IsFavorite)
             {
@@ -191,20 +236,24 @@ namespace IconTool.ViewModels.ModuleRight
 
         private void IconCarts_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
+            DownloadMaterial.RaiseCanExecuteChanged();
+            DownloadCode.RaiseCanExecuteChanged();
             Settings.Default.IconCarts = JsonConvert.SerializeObject(IconCarts);
         }
 
         private void OnChangeCart(int? id)
         {
             var cartItem = Items.FirstOrDefault(x => x.Id == id);
-            cartItem.IsCollected = !cartItem.IsCollected;
-            if (cartItem.IsCollected)
-            {
-                IconCarts.Add(cartItem);
-            }
-            else
-            {
-                IconCarts.Remove(IconCarts.FirstOrDefault(x => x.Id == id));
+            if (cartItem != null) {
+                cartItem.IsCollected = !cartItem.IsCollected;
+                if (cartItem.IsCollected)
+                {
+                    IconCarts.Add(cartItem);
+                }
+                else
+                {
+                    IconCarts.Remove(IconCarts.FirstOrDefault(x => x.Id == id));
+                }
             }
         }
 

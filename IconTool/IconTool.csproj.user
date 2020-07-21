@@ -41,6 +41,9 @@
     <Page Update="Themes\TextBox.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Themes\ToggleButton.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Themes\Window.xaml">
       <SubType>Designer</SubType>
     </Page>

@@ -4,9 +4,8 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/IconTool;component/Themes/Template/ButtonTemplate.xaml"></ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
-    <Style TargetType="Button" x:Key="IconButton">
-        <Setter Property="Width" Value="{DynamicResource Icon.Size}"></Setter>
-        <Setter Property="Height" Value="{DynamicResource Icon.Size}"></Setter>
+    <Style TargetType="Button" x:Key="BaseButton">
+        <Setter Property="local:Assists.IsEnable" Value="{Binding RelativeSource={RelativeSource Mode=Self},Path=IsEnabled,Mode=TwoWay}"></Setter>
         <Setter Property="local:IconAssists.Width" Value="{DynamicResource Icon.Size}"></Setter>
         <Setter Property="local:IconAssists.Height" Value="{DynamicResource Icon.Size}"></Setter>
         <Setter Property="BorderBrush" Value="Transparent"></Setter>
@@ -16,7 +15,40 @@
         <Setter Property="local:IconAssists.Icon" Value="Default"></Setter>
         <Setter Property="BorderThickness" Value="0"></Setter>
         <Setter Property="local:IconAssists.Fill" Value="{Binding RelativeSource={RelativeSource Mode=Self},Path=Foreground}"></Setter>
+    </Style>
+
+    <Style TargetType="Button" x:Key="IconButton" BasedOn="{StaticResource BaseButton}">
         <Setter Property="Template" Value="{StaticResource IconButtonTemplate}"></Setter>
+    </Style>
+
+    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="Height" Value="{DynamicResource ControlHeight}"></Setter>
+        <Setter Property="local:Assists.CornerRadius" Value="{DynamicResource LargeCorner}"></Setter>
+        <Setter Property="local:Assists.IsEnable" Value="{Binding RelativeSource={RelativeSource Mode=Self},Path=IsEnabled,Mode=TwoWay}"></Setter>
+        <Setter Property="BorderBrush" Value="Transparent"></Setter>
+        <Setter Property="Background" Value="#DDDDDD"></Setter>
+        <Setter Property="Cursor" Value="Hand"></Setter>
+        <Setter Property="Template" Value="{StaticResource ButtonTemplate}"></Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource ThemeColor}"></Setter>
+                <Setter Property="Foreground" Value="White"></Setter>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="#BFBFBF"></Setter>
+                <Setter Property="Opacity" Value="0.8"></Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="Button" x:Key="IconTextButton" BasedOn="{StaticResource BaseButton}">
+        <Setter Property="Foreground" Value="#7D8091"></Setter>
+        <Setter Property="Template" Value="{StaticResource IconTextButtonTemplate}"></Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource ThemeColor}"></Setter>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style TargetType="Button" x:Key="IconHoverButton" BasedOn="{StaticResource IconButton}">
