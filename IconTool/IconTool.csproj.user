@@ -9,10 +9,16 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Views\ChildWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\ModuleRight\IconContent.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\MainWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Setting.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -47,10 +53,16 @@
     <Page Update="Themes\Window.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\ChildWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\ModuleRight\IconContent.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Setting.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

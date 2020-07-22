@@ -20,6 +20,14 @@
             <model:IconToolModel Icon="All" SelectedIcon="AllFilled" Name="图标" Path="IconContent"></model:IconToolModel>
             <!--<model:IconToolModel Icon="All" SelectedIcon="AllFilled" Name="图标" Path="IconContent2"></model:IconToolModel>-->
         </array:ArrayList>
+        <Style TargetType="Button" x:Key="MenuIconButton" BasedOn="{StaticResource IconButton}">
+            <Setter Property="control:IconAssists.Fill" Value="#787878"></Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="control:IconAssists.Fill" Value="#999999"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -31,40 +39,51 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <StackPanel Background="#292B2D" Grid.RowSpan="3">
-            <Path Margin="0 20" Width="32" Height="32" Stretch="Uniform" Fill="White" Data="M1.5585938,8.8175259 C1.8085936,8.9425259 2.0898438,9.0597134 2.4023438,9.1690884 C1.9726561,10.880026 1.6210936,12.37612 1.3476563,13.65737 L0.43359381,13.340963 C0.87109369,11.934713 1.2460938,10.426901 1.5585938,8.8175259 z M8.3203125,7.5284634 L8.859375,7.7276821 C8.6328125,8.2979946 8.453125,8.7003384 8.3203125,8.9347134 L7.8046875,8.7120571 C7.992187,8.3370571 8.1640625,7.9425259 8.3203125,7.5284634 z M6.1992188,7.5284634 C6.4023433,7.9269009 6.5781245,8.3214321 6.7265625,8.7120571 L6.1992188,8.9347134 C6.0820308,8.5831509 5.9218745,8.1769009 5.71875,7.7159634 z M7.6523438,7.1183071 L7.6523438,9.2745571 L9.0820313,9.2745571 L9.0820313,7.1183071 z M5.5078125,7.1183071 L5.5078125,9.2745571 L6.9257813,9.2745571 L6.9257813,7.1183071 z M0.76171875,5.4542446 C1.3476561,5.9229951 1.9414061,6.4269013 2.5429688,6.9659634 C2.2773438,7.2394009 2.0625,7.4698696 1.8984375,7.6573696 C1.2734375,7.0401821 0.69531244,6.5167446 0.16406254,6.0870571 z M3.234375,4.5870571 L4.0546875,4.5870571 L4.0546875,13.669088 L3.234375,13.669088 z M6.9257813,4.1300259 L7.6523438,4.1300259 L7.6523438,4.9737759 L10.03125,4.9737759 L10.03125,5.6300259 L7.6523438,5.6300259 L7.6523438,6.5089321 L9.7851563,6.5089321 L9.7851563,10.212057 L9.0820313,10.212057 L9.0820313,9.8839321 L7.6523438,9.8839321 L7.6523438,10.774557 L8.0039063,10.352682 C8.8554688,10.899557 9.5234375,11.37612 10.007813,11.78237 L9.515625,12.321432 C8.9375,11.805807 8.3164063,11.329245 7.6523438,10.891745 L7.6523438,13.364401 L6.9257813,13.364401 L6.9257813,10.352682 C6.2695313,11.391745 5.5546875,12.196432 4.78125,12.766745 C4.6328125,12.555807 4.4570313,12.340963 4.2539063,12.122213 C5.0976563,11.622213 5.8671875,10.87612 6.5625,9.8839321 L5.5078125,9.8839321 L5.5078125,10.212057 L4.8046875,10.212057 L4.8046875,6.5089321 L6.9257813,6.5089321 L6.9257813,5.6300259 L4.5703125,5.6300259 L4.5703125,4.9737759 L6.9257813,4.9737759 z M6.1289063,2.9581509 L11.355469,2.9581509 L11.355469,12.286276 C11.355469,13.208151 10.886719,13.669088 9.9492188,13.669088 C9.5742188,13.669088 9.2148438,13.661276 8.8710938,13.645651 C8.8164063,13.301901 8.7578125,13.016745 8.6953125,12.790182 C9.0546875,12.81362 9.4257813,12.833151 9.8085938,12.848776 C10.292969,12.872213 10.535156,12.630026 10.535156,12.122213 L10.535156,3.7315884 L6.1289063,3.7315884 z M1.3242188,2.4659634 C1.9726561,2.9894009 2.5585938,3.5089321 3.0820313,4.0245571 C2.8242188,4.2589326 2.6015625,4.4815888 2.4140625,4.6925259 C1.734375,3.9737759 1.1796875,3.4269009 0.75,3.0519009 z M4.0664063,2.2667446 C4.6445313,2.8448696 5.1367188,3.3722134 5.5429688,3.8487759 L4.8398438,4.3878384 C4.4804688,3.9034634 4.015625,3.3604946 3.4453125,2.7589321 z"></Path>
-            <ListBox SelectedIndex="0" SelectedValuePath="Path" SelectedValue="{Binding Path,Mode=TwoWay}"
+        <Grid Grid.RowSpan="3"  Background="#292B2D" >
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <StackPanel>
+                <Path Margin="0 20" Width="32" Height="32" Stretch="Uniform" Fill="White" Data="M1.5585938,8.8175259 C1.8085936,8.9425259 2.0898438,9.0597134 2.4023438,9.1690884 C1.9726561,10.880026 1.6210936,12.37612 1.3476563,13.65737 L0.43359381,13.340963 C0.87109369,11.934713 1.2460938,10.426901 1.5585938,8.8175259 z M8.3203125,7.5284634 L8.859375,7.7276821 C8.6328125,8.2979946 8.453125,8.7003384 8.3203125,8.9347134 L7.8046875,8.7120571 C7.992187,8.3370571 8.1640625,7.9425259 8.3203125,7.5284634 z M6.1992188,7.5284634 C6.4023433,7.9269009 6.5781245,8.3214321 6.7265625,8.7120571 L6.1992188,8.9347134 C6.0820308,8.5831509 5.9218745,8.1769009 5.71875,7.7159634 z M7.6523438,7.1183071 L7.6523438,9.2745571 L9.0820313,9.2745571 L9.0820313,7.1183071 z M5.5078125,7.1183071 L5.5078125,9.2745571 L6.9257813,9.2745571 L6.9257813,7.1183071 z M0.76171875,5.4542446 C1.3476561,5.9229951 1.9414061,6.4269013 2.5429688,6.9659634 C2.2773438,7.2394009 2.0625,7.4698696 1.8984375,7.6573696 C1.2734375,7.0401821 0.69531244,6.5167446 0.16406254,6.0870571 z M3.234375,4.5870571 L4.0546875,4.5870571 L4.0546875,13.669088 L3.234375,13.669088 z M6.9257813,4.1300259 L7.6523438,4.1300259 L7.6523438,4.9737759 L10.03125,4.9737759 L10.03125,5.6300259 L7.6523438,5.6300259 L7.6523438,6.5089321 L9.7851563,6.5089321 L9.7851563,10.212057 L9.0820313,10.212057 L9.0820313,9.8839321 L7.6523438,9.8839321 L7.6523438,10.774557 L8.0039063,10.352682 C8.8554688,10.899557 9.5234375,11.37612 10.007813,11.78237 L9.515625,12.321432 C8.9375,11.805807 8.3164063,11.329245 7.6523438,10.891745 L7.6523438,13.364401 L6.9257813,13.364401 L6.9257813,10.352682 C6.2695313,11.391745 5.5546875,12.196432 4.78125,12.766745 C4.6328125,12.555807 4.4570313,12.340963 4.2539063,12.122213 C5.0976563,11.622213 5.8671875,10.87612 6.5625,9.8839321 L5.5078125,9.8839321 L5.5078125,10.212057 L4.8046875,10.212057 L4.8046875,6.5089321 L6.9257813,6.5089321 L6.9257813,5.6300259 L4.5703125,5.6300259 L4.5703125,4.9737759 L6.9257813,4.9737759 z M6.1289063,2.9581509 L11.355469,2.9581509 L11.355469,12.286276 C11.355469,13.208151 10.886719,13.669088 9.9492188,13.669088 C9.5742188,13.669088 9.2148438,13.661276 8.8710938,13.645651 C8.8164063,13.301901 8.7578125,13.016745 8.6953125,12.790182 C9.0546875,12.81362 9.4257813,12.833151 9.8085938,12.848776 C10.292969,12.872213 10.535156,12.630026 10.535156,12.122213 L10.535156,3.7315884 L6.1289063,3.7315884 z M1.3242188,2.4659634 C1.9726561,2.9894009 2.5585938,3.5089321 3.0820313,4.0245571 C2.8242188,4.2589326 2.6015625,4.4815888 2.4140625,4.6925259 C1.734375,3.9737759 1.1796875,3.4269009 0.75,3.0519009 z M4.0664063,2.2667446 C4.6445313,2.8448696 5.1367188,3.3722134 5.5429688,3.8487759 L4.8398438,4.3878384 C4.4804688,3.9034634 4.015625,3.3604946 3.4453125,2.7589321 z"></Path>
+                <ListBox SelectedIndex="0" SelectedValuePath="Path" SelectedValue="{Binding Path,Mode=TwoWay}"
                      Background="Transparent" 
                      BorderThickness="0"
                      ForceCursor="True"
                      Cursor="Hand"
                 ItemsSource="{Binding Source={StaticResource MenuSource}}">
-                <ListBox.ItemContainerStyle>
-                    <Style TargetType="ListBoxItem">
-                        <Setter Property="Margin" Value="0 10"></Setter>
-                        <Setter Property="Background" Value="Transparent"></Setter>
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="ListBoxItem">
-                                    <Border ToolTip="{Binding Name}" BorderBrush="{TemplateBinding BorderBrush}" 
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Margin" Value="0 10"></Setter>
+                            <Setter Property="Background" Value="Transparent"></Setter>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListBoxItem">
+                                        <Border ToolTip="{Binding Name}" BorderBrush="{TemplateBinding BorderBrush}" 
                                             BorderThickness="{TemplateBinding BorderThickness}"
                                             Background="{TemplateBinding Background}">
-                                        <Path x:Name="path" Width="20" Height="20" Stretch="Uniform" Fill="#5B5C5E" 
+                                            <Path x:Name="path" Width="20" Height="20" Stretch="Uniform" Fill="#5B5C5E" 
                                           control:IconAssists.Icon="{Binding Icon}"></Path>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsSelected" Value="True">
-                                            <Setter TargetName="path" Property="control:IconAssists.Icon" Value="{Binding RelativeSource={RelativeSource Mode=Self},Path=DataContext.SelectedIcon}"></Setter>
-                                            <Setter TargetName="path" Property="Fill" Value="#07C160"></Setter>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </ListBox.ItemContainerStyle>
-            </ListBox>
-        </StackPanel>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter TargetName="path" Property="control:IconAssists.Icon" Value="{Binding RelativeSource={RelativeSource Mode=Self},Path=DataContext.SelectedIcon}"></Setter>
+                                                <Setter TargetName="path" Property="Fill" Value="#07C160"></Setter>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Margin="0 20">
+                <Button ToolTip="设置" Command="{Binding ShowSettingDialog}"
+                        Style="{StaticResource MenuIconButton}" 
+                        control:IconAssists.Icon="More"></Button>
+            </StackPanel>
+        </Grid>
         <Border Grid.Column="1" Height="30" Background="#F0F0F0"></Border>
         <ContentControl Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" prism:RegionManager.RegionName="ContentRegion" />
     </Grid>

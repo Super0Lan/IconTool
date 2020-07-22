@@ -1,5 +1,7 @@
-﻿using Prism.Mvvm;
+﻿using Prism.Commands;
+using Prism.Mvvm;
 using Prism.Regions;
+using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
 
@@ -23,9 +25,23 @@ namespace IconTool.ViewModels
 
 
         private readonly IRegionManager _regionManager;
-        public MainWindowViewModel(IRegionManager regionManager)
+        private readonly IDialogService _dialogService;
+
+        public DelegateCommand ShowSettingDialog { get; private set; }
+
+        public MainWindowViewModel(IRegionManager regionManager,IDialogService dialogService)
         {
             _regionManager = regionManager;
+            _dialogService = dialogService;
+            ShowSettingDialog = new DelegateCommand(OnShowSettingDialog);
+        }
+
+        private void OnShowSettingDialog()
+        {
+            _dialogService.Show("SettingWindow", null, (r) =>
+            {
+
+            });
         }
 
         private void Navigate(string path)

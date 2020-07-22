@@ -29,6 +29,8 @@ namespace IconTool
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterSingleton(typeof(MainWindowViewModel));
+            containerRegistry.RegisterDialog<Setting,SettingViewModel>("SettingWindow");
+            containerRegistry.RegisterDialogWindow<ChildWindow>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
