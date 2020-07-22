@@ -3,6 +3,8 @@ using IconTool.Helper;
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -175,37 +177,70 @@ namespace IconTool.Controls
             DependencyProperty.RegisterAttached("IsPopupOpen", typeof(bool), typeof(Assists), new PropertyMetadata(false));
         #endregion
 
+        #region Popup
 
 
-        public static bool GetIsPopupPanel(DependencyObject obj)
+
+        public static DependencyObject GetPopupOpenTarget(DependencyObject obj)
         {
-            return (bool)obj.GetValue(IsPopupPanelProperty);
+            return (DependencyObject)obj.GetValue(PopupOpenTargetProperty);
         }
 
-        public static void SetIsPopupPanel(DependencyObject obj, bool value)
+        public static void SetPopupOpenTarget(DependencyObject obj, DependencyObject value)
         {
-            obj.SetValue(IsPopupPanelProperty, value);
+            obj.SetValue(PopupOpenTargetProperty, value);
         }
 
-        // Using a DependencyProperty as the backing store for IsPopupPanel.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty IsPopupPanelProperty =
-            DependencyProperty.RegisterAttached("IsPopupPanel", typeof(bool), typeof(Assists), new PropertyMetadata(false,IsPopupPanelPropertyChanged));
+        // Using a DependencyProperty as the backing store for PopupOpenTarget.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty PopupOpenTargetProperty =
+            DependencyProperty.RegisterAttached("PopupOpenTarget", typeof(DependencyObject), typeof(Assists), new PropertyMetadata(null));
 
-        private static void IsPopupPanelPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+
+
+
+        public static DependencyObject GetPopupPlacementTarget(DependencyObject obj)
         {
-            if (d is Panel panel) {
-                if ((bool)e.NewValue)
+            return (DependencyObject)obj.GetValue(PopupPlacementTargetProperty);
+        }
+
+        public static void SetPopupPlacementTarget(DependencyObject obj, DependencyObject value)
+        {
+            obj.SetValue(PopupPlacementTargetProperty, value);
+        }
+
+        // Using a DependencyProperty as the backing store for PopupPlacementTarget.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty PopupPlacementTargetProperty =
+            DependencyProperty.RegisterAttached("PopupPlacementTarget", typeof(DependencyObject), typeof(Assists), new PropertyMetadata(null, OnPopupPlacementTargetChanged));
+
+        private static void OnPopupPlacementTargetChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue != null)
+            {
+                DependencyObject popupPopupPlacementTarget = e.NewValue as DependencyObject;
+                Popup pop = d as Popup;
+                Window w = Window.GetWindow(popupPopupPlacementTarget);
+                if (null != w)
                 {
-                    panel.PreviewMouseLeftButtonDown += Panel_PreviewMouseLeftButtonDown;
-                }
-                else {
-                    panel.PreviewMouseLeftButtonDown -= Panel_PreviewMouseLeftButtonDown;
+                    w.Deactivated += (sender, de) =>
+                    {
+                        pop.SetCurrentValue(Popup.IsOpenProperty, false);
+                    };
+                    w.PreviewMouseLeftButtonDown += (sender,de) =>
+                    {
+                        if (pop.IsOpen) {
+                            if (!pop.IsMouseOver) {
+                                pop.SetCurrentValue(Popup.IsOpenProperty, false);
+                            }
+                            if (GetPopupOpenTarget(pop) is UIElement uIElement && uIElement.IsMouseOver) {
+                                de.Handled = true;
+                            }
+                        }
+                    };
                 }
             }
         }
-        private static void Panel_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            e.Handled = GetIsPopupOpen(sender as Panel);
-        }
+
+
+        #endregion
     }
 }

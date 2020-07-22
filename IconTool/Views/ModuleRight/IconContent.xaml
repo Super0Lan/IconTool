@@ -113,6 +113,33 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style TargetType="Popup" x:Key="CartPopup">
+            <Setter Property="StaysOpen" Value="True"></Setter>
+            <Setter Property="Placement" Value="Right"></Setter>
+            <Setter Property="VerticalOffset" Value="20"></Setter>
+            <Setter Property="HorizontalOffset" Value="-20"></Setter>
+            <Setter Property="AllowsTransparency" Value="True"></Setter>
+            <Setter Property="PopupAnimation" Value="Fade"></Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window},Path=WindowState}" Value="Maximized">
+                    <Setter Property="VerticalOffset" Value="83"></Setter>
+                    <Setter Property="HorizontalOffset" Value="-260"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="Border" x:Key="CartPopupBorder">
+            <Setter Property="Width" Value="250"></Setter>
+            <Setter Property="Background" Value="#F5F5F5"></Setter>
+            <Setter Property="Height" Value="{Binding ElementName=IcontPresent,Path=ActualHeight,Converter={StaticResource CalculationConverter},ConverterParameter=({0}+30)}"></Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window},Path=WindowState}" Value="Maximized">
+                    <Setter Property="Background" Value="White"></Setter>
+                    <Setter Property="Height" Value="{Binding ElementName=IcontPresent,Path=ActualHeight,Converter={StaticResource CalculationConverter},ConverterParameter=({0}-47)}"></Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
     <AdornerDecorator>
         <Grid local:Assists.Loading="{Binding IsLoading}">
@@ -132,24 +159,22 @@
                      VerticalContentAlignment="Center"></TextBox>
             </WrapPanel>
 
-
-            <Grid local:Assists.IsPopupPanel="True" x:Name="PopupPanel">
-                <ToggleButton x:Name="BtnMyCart" HorizontalAlignment="Right"  Width="24" Height="24"
+            <ToggleButton x:Name="BtnMyCart" HorizontalAlignment="Right"  Width="24" Height="24"
         local:IconAssists.Width="24"
-        local:IconAssists.Height="24"
-        local:IconAssists.Icon="CartEmpty" IsChecked="{Binding ElementName=PopupPanel,Path=(local:Assists.IsPopupOpen),Mode=TwoWay}"
+        local:IconAssists.Height="24" ClickMode="Release"
+        local:IconAssists.Icon="CartEmpty"
         Margin="0 0 20 0" Style="{StaticResource IconCartButton}">
-                    <local:Assists.Badge>
-                        <local:Badge Text="{Binding IconCarts.Count}"></local:Badge>
-                    </local:Assists.Badge>
-                </ToggleButton>
-            </Grid>
-            <Popup IsOpen="{Binding ElementName=PopupPanel,Path=(local:Assists.IsPopupOpen),Mode=TwoWay}" 
-                StaysOpen="False"
-        Placement="Right" VerticalOffset="20" HorizontalOffset="-20" AllowsTransparency="True" PopupAnimation="Scroll"
-        PlacementTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}">
+                <local:Assists.Badge>
+                    <local:Badge Text="{Binding IconCarts.Count}"></local:Badge>
+                </local:Assists.Badge>
+            </ToggleButton>
+            <Popup IsOpen="{Binding ElementName=BtnMyCart,Path=IsChecked,Mode=TwoWay}" 
+                   Style="{StaticResource CartPopup}"
+                   local:Assists.PopupOpenTarget="{Binding ElementName=BtnMyCart}"
+                   local:Assists.PopupPlacementTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}"
+                   PlacementTarget="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window}}">
                 <AdornerDecorator>
-                <Border Background="#FCFCFC" Width="250" Height="{Binding ElementName=IcontPresent,Path=ActualHeight,Converter={StaticResource CalculationConverter},ConverterParameter=({0}+30)}">
+                <Border  Style="{StaticResource CartPopupBorder}">
                     <Grid Background="Transparent">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"/>
@@ -161,7 +186,7 @@
                                 local:IconAssists.Icon="Clear" 
                                 Content="一键清除" 
                                 Command="{Binding ClearCartCommand}"></Button>
-                        <ListBox BorderThickness="0" Grid.Row="1"
+                        <ListBox BorderThickness="0" Grid.Row="1" Background="Transparent"
                          ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
                          ScrollViewer.VerticalScrollBarVisibility="Hidden" 
                          ItemsSource="{Binding IconCarts}"
@@ -184,7 +209,7 @@
 
 
 
-            <ListBox BorderThickness="0" Grid.Row="1"
+            <ListBox BorderThickness="0" Grid.Row="1" Background="#F5F5F5"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
                  ScrollViewer.VerticalScrollBarVisibility="Disabled"
                  ItemsSource="{Binding Items}" 
@@ -196,7 +221,7 @@
                 </ListBox.ItemsPanel>
             </ListBox>
 
-            <local:Pagination Grid.Row="2" PageSize="54" Margin="0 0 10 10"
+            <local:Pagination Grid.Row="2" PageSize="54" Margin="0 10 10 10"
                           Total="{Binding Count}"
                           CurrentPage="{Binding Page,Mode=TwoWay}" 
                           HorizontalAlignment="Right"

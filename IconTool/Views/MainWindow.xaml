@@ -18,7 +18,7 @@
     <Window.Resources>
         <array:ArrayList x:Key="MenuSource">
             <model:IconToolModel Icon="All" SelectedIcon="AllFilled" Name="图标" Path="IconContent"></model:IconToolModel>
-            <model:IconToolModel Icon="All" SelectedIcon="AllFilled" Name="图标" Path="IconContent2"></model:IconToolModel>
+            <!--<model:IconToolModel Icon="All" SelectedIcon="AllFilled" Name="图标" Path="IconContent2"></model:IconToolModel>-->
         </array:ArrayList>
     </Window.Resources>
     <Grid>

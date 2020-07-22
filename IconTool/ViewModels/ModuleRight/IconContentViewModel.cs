@@ -311,7 +311,7 @@ namespace IconTool.ViewModels.ModuleRight
 
         private void OnClickCopyPath(string obj)
         {
-            Clipboard.SetDataObject(string.IsNullOrEmpty(obj) ? "" : $"<Path Width=\"36\" Height=\"36\" Stretch=\"Uniform\" Fill=\"Black\" Data=\"{obj}\"></Path>");
+            Clipboard.SetDataObject(string.IsNullOrEmpty(obj) ? "" : $"<Path Width=\"36\" Height=\"36\" Stretch=\"Uniform\" Fill=\"Black\" Data=\"{obj.Replace("|"," ")}\"></Path>");
         }
     }
 }
