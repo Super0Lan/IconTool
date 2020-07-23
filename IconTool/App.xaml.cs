@@ -1,7 +1,9 @@
-﻿using IconTool.ViewModels;
+﻿using IconTool.Extensions;
+using IconTool.ViewModels;
 using IconTool.Views;
 using Prism.Ioc;
 using Prism.Modularity;
+using Prism.Services.Dialogs;
 using Prism.Unity;
 using System.Windows;
 using System.Windows.Navigation;
@@ -29,8 +31,10 @@ namespace IconTool
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterSingleton(typeof(MainWindowViewModel));
-            containerRegistry.RegisterDialog<Setting,SettingViewModel>("SettingWindow");
-            containerRegistry.RegisterDialogWindow<ChildWindow>();
+            //containerRegistry.RegisterDialog<Setting,SettingViewModel>("SettingWindow");
+            ////containerRegistry.RegisterDialogWindow<Window1>();
+            //containerRegistry.RegisterDialogWindow<ChildWindow>("TestChildWindow");
+            //containerRegistry.RegisterSingleton<ChildWindow>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)

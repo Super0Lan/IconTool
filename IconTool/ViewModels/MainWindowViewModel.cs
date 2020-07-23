@@ -1,4 +1,5 @@
-﻿using Prism.Commands;
+﻿using IconTool.Extensions;
+using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using Prism.Services.Dialogs;
