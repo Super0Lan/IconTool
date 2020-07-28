@@ -1,4 +1,5 @@
 ﻿using IconTool.Extensions;
+using IconTool.PrismExtensions;
 using IconTool.ViewModels;
 using IconTool.Views;
 using Prism.Ioc;
@@ -30,11 +31,11 @@ namespace IconTool
         }
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.Register<IToolDialogService,ToolDialogService>();
             containerRegistry.RegisterSingleton(typeof(MainWindowViewModel));
-            //containerRegistry.RegisterDialog<Setting,SettingViewModel>("SettingWindow");
-            ////containerRegistry.RegisterDialogWindow<Window1>();
-            //containerRegistry.RegisterDialogWindow<ChildWindow>("TestChildWindow");
-            //containerRegistry.RegisterSingleton<ChildWindow>();
+            containerRegistry.RegisterDialog<Setting,SettingViewModel>("Setting");
+            containerRegistry.RegisterDialogWindow<ChildWindow>();
+            containerRegistry.RegisterDialogWindow<SettingWindow>("SettingWindow");
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
