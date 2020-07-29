@@ -79,6 +79,9 @@ namespace IconTool.PrismExtensions
             if (unique != null) {
                 var window = Application.Current?.Windows.OfType<Window>().FirstOrDefault(x => x is ISingleWindow singleWindow && singleWindow.UniqueValue == unique);
                 if (window != null) {
+                    if (window.WindowState == WindowState.Minimized) {
+                        window.WindowState = WindowState.Normal;
+                    }
                     window.Activate();
                     return;
                 }
@@ -197,8 +200,8 @@ namespace IconTool.PrismExtensions
             window.Content = dialogContent;
             window.DataContext = viewModel; //we want the host window and the dialog to share the same data context
 
-            if (window.Owner == null)
-                window.Owner = Application.Current?.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+            //if (window.Owner == null)
+            //    window.Owner = Application.Current?.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
         }
     }
 }
