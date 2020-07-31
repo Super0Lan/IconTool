@@ -13,6 +13,7 @@
     <SolidColorBrush x:Key="FocusedBorderBrush" Color="#409EFF"></SolidColorBrush>
     <SolidColorBrush x:Key="Control.Unable.Background" Color="#F5F7FA"></SolidColorBrush>
     <SolidColorBrush x:Key="Control.Unable.Forground" Color="#c0c4cc"></SolidColorBrush>
+    <SolidColorBrush x:Key="TextBlock.TitleForground" Color="#999999"></SolidColorBrush>
     <sys:Double x:Key="FontSize.ExtraSmall">12</sys:Double>
     <sys:Double x:Key="FontSize.Small">13</sys:Double>
     <sys:Double x:Key="FontSize.Base">14</sys:Double>

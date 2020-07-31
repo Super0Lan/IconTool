@@ -10,6 +10,7 @@
         <Setter Property="local:IconAssists.Height" Value="{DynamicResource Icon.Size}"></Setter>
         <Setter Property="BorderBrush" Value="Transparent"></Setter>
         <Setter Property="Cursor" Value="Hand"></Setter>
+        <Setter Property="Focusable" Value="False"></Setter>
         <Setter Property="Foreground" Value="{DynamicResource ThemeColor}"></Setter>
         <Setter Property="Background" Value="Transparent"></Setter>
         <Setter Property="local:IconAssists.Icon" Value="Default"></Setter>

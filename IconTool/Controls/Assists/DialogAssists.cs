@@ -9,6 +9,8 @@ namespace IconTool.Controls
     public class DialogAssists
     {
 
+        #region 是否自动设置OwnerWindow
+
 
         public static bool GetAutoWireOwerWindow(DependencyObject obj)
         {
@@ -32,5 +34,28 @@ namespace IconTool.Controls
                 }
             }
         }
+
+        #endregion
+
+        #region WindowStyle
+
+
+
+        public static WindowStyle GetWindowStyle(DependencyObject obj)
+        {
+            return (WindowStyle)obj.GetValue(WindowStyleProperty);
+        }
+
+        public static void SetWindowStyle(DependencyObject obj, WindowStyle value)
+        {
+            obj.SetValue(WindowStyleProperty, value);
+        }
+
+        // Using a DependencyProperty as the backing store for WindowStyle.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty WindowStyleProperty =
+            DependencyProperty.RegisterAttached("WindowStyle", typeof(WindowStyle), typeof(DialogAssists), new PropertyMetadata(WindowStyle.None));
+
+
+        #endregion
     }
 }

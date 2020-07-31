@@ -7,14 +7,12 @@
               xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
-             Width="550" Height="550">
+             Width="550" Height="470">
     <Grid Background="#F5F5F5">
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-
-        <TextBlock Text="{Binding Message}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" TextWrapping="Wrap" />
-        <Button Command="{Binding CloseDialogCommand}" CommandParameter="true" Content="OK" Width="75" Height="25" HorizontalAlignment="Right" Margin="0,10,0,0" Grid.Row="1" IsDefault="True" />
+        <TextBlock Text="{Binding Title}" Style="{StaticResource TitleText}" Grid.Row="0" Margin="10 10 0 0"/>
     </Grid>
 </UserControl>

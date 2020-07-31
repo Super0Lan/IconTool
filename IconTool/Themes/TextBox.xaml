@@ -123,4 +123,9 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+
+    <Style TargetType="TextBlock" x:Key="TitleText">
+        <Setter Property="Foreground" Value="{DynamicResource TextBlock.TitleForground}"></Setter>
+        <Setter Property="FontSize" Value="{DynamicResource FontSize.Small}"></Setter>
+    </Style>
 </ResourceDictionary>

@@ -81,7 +81,7 @@
             </StackPanel>
             <StackPanel Grid.Row="1" Margin="0 20">
                 <Button ToolTip="设置" Command="{Binding ShowSettingDialog}"
-                        Style="{StaticResource MenuIconButton}" 
+                        Style="{StaticResource MenuIconButton}"
                         control:IconAssists.Icon="More"></Button>
             </StackPanel>
         </Grid>

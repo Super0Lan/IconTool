@@ -4,9 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IconTool.Views" SizeToContent="WidthAndHeight"
+        xmlns:control="clr-namespace:IconTool.Controls"
         WindowStartupLocation="CenterScreen"
+        control:DialogAssists.WindowStyle="ToolWindow"
         mc:Ignorable="d" Style="{StaticResource WindowStyle}">
-    <Grid>
-        
-    </Grid>
 </Window>
