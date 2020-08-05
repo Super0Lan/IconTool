@@ -6,6 +6,6 @@
         xmlns:local="clr-namespace:IconTool.Views" SizeToContent="WidthAndHeight"
         xmlns:control="clr-namespace:IconTool.Controls"
         WindowStartupLocation="CenterScreen"
-        control:DialogAssists.WindowStyle="ToolWindow"
+        control:DialogAssists.WindowStyle="ToolWindow" ResizeMode="NoResize"
         mc:Ignorable="d" Style="{StaticResource WindowStyle}">
 </Window>

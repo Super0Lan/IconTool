@@ -8,5 +8,19 @@
     <Setting Name="MyCollection" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="IsCompress" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="DefaultCodeTemplate" Type="System.String" Scope="User">
+      <Value Profile="(Default)">&lt;ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"&gt;
+	#begin#
+	&lt;PathGeometry x:Key="{name}" Figures="{path}"&gt;&lt;/PathGeometry&gt;
+	#end#
+&lt;/ResourceDictionary&gt;</Value>
+    </Setting>
+    <Setting Name="UserCodeTemplate" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -20,16 +20,7 @@ namespace IconTool.ViewModels
         public DelegateCommand<string> CloseDialogCommand { get; private set; }
 
         public SettingViewModel() {
-            CloseDialogCommand = new DelegateCommand<string>(OnClickOk);
-            Timer timer = new Timer((stat) =>
-            {
-                App.UIDispatcher.Invoke(() =>
-                {
-                    Message = Guid.NewGuid().ToString();
-                });
-            });
-            timer.Change(0, 1000);
-            
+            CloseDialogCommand = new DelegateCommand<string>(OnClickOk);          
         }
 
         private void OnClickOk(string obj)

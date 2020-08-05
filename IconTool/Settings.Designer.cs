@@ -46,5 +46,46 @@ namespace IconTool {
                 this["MyCollection"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IsCompress {
+            get {
+                return ((bool)(this["IsCompress"]));
+            }
+            set {
+                this["IsCompress"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<ResourceDictionary xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation""
+                    xmlns:x=""http://schemas.microsoft.com/winfx/2006/xaml"">
+	#begin#
+	<PathGeometry x:Key=""{name}"" Figures=""{path}""></PathGeometry>
+	#end#
+</ResourceDictionary>")]
+        public string DefaultCodeTemplate {
+            get {
+                return ((string)(this["DefaultCodeTemplate"]));
+            }
+            set {
+                this["DefaultCodeTemplate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string UserCodeTemplate {
+            get {
+                return ((string)(this["UserCodeTemplate"]));
+            }
+            set {
+                this["UserCodeTemplate"] = value;
+            }
+        }
     }
 }

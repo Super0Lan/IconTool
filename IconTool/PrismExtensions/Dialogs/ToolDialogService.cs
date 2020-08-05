@@ -76,27 +76,29 @@ namespace IconTool.PrismExtensions
 
         void ShowDialogInternal(string name, IDialogParameters parameters, Action<IDialogResult> callback, bool isModal, string windowName = null, string unique = null)
         {
-            if (unique != null) {
-                var window = Application.Current?.Windows.OfType<Window>().FirstOrDefault(x => x is ISingleWindow singleWindow && singleWindow.UniqueValue == unique);
-                if (window != null) {
-                    if (window.WindowState == WindowState.Minimized) {
-                        window.WindowState = WindowState.Normal;
-                    }
-                    window.Activate();
-                    return;
+            if (!string.IsNullOrEmpty(unique) && !isModal
+                && Application.Current?.Windows.OfType<Window>().FirstOrDefault(x => x is ISingleWindow singleWindow && singleWindow.UniqueValue == unique) is Window window)
+            {
+                if (window.WindowState == WindowState.Minimized)
+                {
+                    window.WindowState = WindowState.Normal;
                 }
+                window.Activate();
+                return;
             }
-            IDialogWindow dialogWindow = CreateDialogWindow(windowName);
-            if (dialogWindow is ISingleWindow singleWindow) {
-                singleWindow.UniqueValue = unique;
+            else {
+                IDialogWindow dialogWindow = CreateDialogWindow(windowName);
+                if (dialogWindow is ISingleWindow singleWindow)
+                {
+                    singleWindow.UniqueValue = unique;
+                }
+                ConfigureDialogWindowEvents(dialogWindow, callback);
+                ConfigureDialogWindowContent(name, dialogWindow, parameters);
+                if (isModal)
+                    dialogWindow.ShowDialog();
+                else
+                    dialogWindow.Show();
             }
-            ConfigureDialogWindowEvents(dialogWindow, callback);
-            ConfigureDialogWindowContent(name, dialogWindow, parameters);
-
-            if (isModal)
-                dialogWindow.ShowDialog();
-            else
-                dialogWindow.Show();
         }
 
         /// <summary>
@@ -199,9 +201,6 @@ namespace IconTool.PrismExtensions
 
             window.Content = dialogContent;
             window.DataContext = viewModel; //we want the host window and the dialog to share the same data context
-
-            //if (window.Owner == null)
-            //    window.Owner = Application.Current?.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
         }
     }
 }

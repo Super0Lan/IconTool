@@ -6,9 +6,9 @@
     
     <sys:Double x:Key="ControlHeight">35</sys:Double>
     <sys:Double x:Key="ControlWidth">100</sys:Double>
-
     <SolidColorBrush x:Key="ThemeColor" Color="#FF0000"></SolidColorBrush>
     <SolidColorBrush x:Key="BorderBrush" Color="#dcdfe6"></SolidColorBrush>
+    <SolidColorBrush x:Key="Setting.Tab.SelectedBrush" Color="#3DCE3D"></SolidColorBrush>
     <SolidColorBrush x:Key="MouseOverBorderBrush" Color="#C0C4CC"></SolidColorBrush>
     <SolidColorBrush x:Key="FocusedBorderBrush" Color="#409EFF"></SolidColorBrush>
     <SolidColorBrush x:Key="Control.Unable.Background" Color="#F5F7FA"></SolidColorBrush>
@@ -25,8 +25,6 @@
     <CornerRadius x:Key="RoundCorner">99</CornerRadius>
     <sys:Double x:Key="Icon.Size">16</sys:Double>
     <SolidColorBrush x:Key="Icon.Color" Color="#dcdfe6"></SolidColorBrush>
-
-
     <Style TargetType="Control" x:Key="Loading">
         <Setter Property="Background" Value="#333333"></Setter>
         <Setter Property="Template">

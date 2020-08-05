@@ -4,15 +4,69 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:IconTool.Views"
-              xmlns:prism="http://prismlibrary.com/"
+             xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:array="clr-namespace:System.Collections;assembly=System.Runtime.Extensions"
+             xmlns:model="clr-namespace:IconTool.Models"
              mc:Ignorable="d" 
+             xmlns:sys="clr-namespace:System;assembly=System.Runtime"
              Width="550" Height="470">
+    <UserControl.Resources>
+        <array:ArrayList x:Key="SettingTabSource">
+            <model:IconToolModel Name="账号设置" Path="IconContent"></model:IconToolModel>
+            <model:IconToolModel Name="通用设置" Path="IconContent"></model:IconToolModel>
+            <model:IconToolModel Name="文件管理" Path="IconContent"></model:IconToolModel>
+            <model:IconToolModel Name="快捷按键" Path="IconContent"></model:IconToolModel>
+            <model:IconToolModel Name="关于软件" Path="IconContent"></model:IconToolModel>
+        </array:ArrayList>
+    </UserControl.Resources>
     <Grid Background="#F5F5F5">
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="80"/>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <TextBlock Text="{Binding Title}" Style="{StaticResource TitleText}" Grid.Row="0" Margin="10 10 0 0"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <ListBox BorderThickness="0 0 1 0" SelectedIndex="1" SelectedValuePath="Path"
+                     BorderBrush="{DynamicResource BorderBrush}"
+                     Background="Transparent" Cursor="Hand" ForceCursor="True"
+                     ItemsSource="{Binding Source={StaticResource SettingTabSource}}">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                        <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+                        <Setter Property="Margin" Value="0 0 0 15"></Setter>
+                        <Setter Property="Padding" Value="0"></Setter>
+                        <Setter Property="BorderThickness" Value="0 0 2 0"></Setter>
+                        <Setter Property="Background" Value="Transparent"></Setter>
+                        <Setter Property="FontSize" Value="{DynamicResource FontSize.Small}"></Setter>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBoxItem">
+                                    <Border Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                                        <ContentPresenter Content="{Binding Name}"
+                                        Margin="{TemplateBinding Padding}"
+                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"></ContentPresenter>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="BorderBrush" Value="{DynamicResource Setting.Tab.SelectedBrush}"></Setter>
+                                            <Setter Property="Foreground" Value="{DynamicResource Setting.Tab.SelectedBrush}"></Setter>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+            </ListBox>
+            <ContentControl prism:RegionManager.RegionName="SettingRegion" Grid.Column="1"></ContentControl>
+        </Grid>
     </Grid>
 </UserControl>
