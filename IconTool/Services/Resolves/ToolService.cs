@@ -5,7 +5,7 @@ using System.Text;
 
 namespace IconTool.Services.Resolves
 {
-    public class ToolServices : IToolServices
+    public class ToolService : IToolService
     {
         private readonly string beginStr = "#begin#";
         private readonly string endStr = "#end#";

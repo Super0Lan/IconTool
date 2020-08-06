@@ -1,5 +1,6 @@
 ﻿using IconTool.Helper;
 using IconTool.Models;
+using IconTool.Services.Interfaces;
 using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -158,8 +159,13 @@ namespace IconTool.ViewModels.ModuleRight
 
         public bool KeepAlive => true;
 
-        public IconContentViewModel()
+        private IIconService _iconService;
+        private ISetting _setting;
+
+        public IconContentViewModel(IIconService iconService,ISetting setting)
         {
+            _iconService = iconService;
+            _setting = setting;
             CopyPathCommand = new DelegateCommand<string>(OnClickCopyPath);
             LoadedCommand = new DelegateCommand(OnLoaded);
             ChangeCartCommand = new DelegateCommand<int?>(OnChangeCart);
@@ -173,15 +179,15 @@ namespace IconTool.ViewModels.ModuleRight
             MyCollection.CollectionChanged += MyCollection_CollectionChanged;
 
             ///加载用户数据库
-            if (!string.IsNullOrEmpty(Settings.Default.IconCarts))
+            if (_setting.IconCarts != null)
             {
-                IconCarts.AddRange(JsonConvert.DeserializeObject<List<IconItemViewModel>>(Settings.Default.IconCarts));
+                IconCarts.AddRange(_setting.IconCarts);
             }
 
             ///加载用户数据收藏夹
-            if (!string.IsNullOrEmpty(Settings.Default.MyCollection))
+            if (_setting.MyCollection != null)
             {
-                MyCollection.AddRange(JsonConvert.DeserializeObject<List<IconItemViewModel>>(Settings.Default.MyCollection));
+                MyCollection.AddRange(_setting.MyCollection);
             }
 
         }
@@ -214,7 +220,7 @@ namespace IconTool.ViewModels.ModuleRight
 
         private void MyCollection_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            Settings.Default.MyCollection = JsonConvert.SerializeObject(MyCollection);
+            _setting.MyCollection = MyCollection;
         }
 
         private void OnCollectionChanged(int? id)
@@ -238,7 +244,7 @@ namespace IconTool.ViewModels.ModuleRight
         {
             DownloadMaterial.RaiseCanExecuteChanged();
             DownloadCode.RaiseCanExecuteChanged();
-            Settings.Default.IconCarts = JsonConvert.SerializeObject(IconCarts);
+            _setting.IconCarts = IconCarts;
         }
 
         private void OnChangeCart(int? id)
@@ -274,7 +280,7 @@ namespace IconTool.ViewModels.ModuleRight
                 {
                     try
                     {
-                        var res = HttpClientHelper.Post<ResultModel<IconCollection>>(SearchText, FromType, ColorType, Tag, page);
+                        var res = _iconService.GetList(SearchText, FromType, ColorType, Tag, page);
                         if (res.IsSuccess)
                         {
                             App.UIDispatcher.Invoke(() =>

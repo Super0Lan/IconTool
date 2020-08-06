@@ -33,7 +33,8 @@ namespace IconTool
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.Register<IToolDialogService,ToolDialogService>();
-            containerRegistry.Register<IToolServices, Services.Resolves.ToolServices>();
+            containerRegistry.Register<IIconService, Services.Resolves.IconService>();
+            containerRegistry.Register<IToolService, Services.Resolves.ToolService>();
             containerRegistry.Register<ISetting, Services.Resolves.Setting>();
             containerRegistry.RegisterSingleton(typeof(MainWindowViewModel));
             containerRegistry.RegisterDialog<Setting,SettingViewModel>("Setting");

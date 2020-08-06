@@ -27,7 +27,7 @@
         </Grid.ColumnDefinitions>
         <Label Content="通用" HorizontalAlignment="Right" Padding="0"></Label>
         <CheckBox Grid.Column="2" IsChecked="{Binding IsCompress,Mode=TwoWay}">开启压缩</CheckBox>
-        <StackPanel Grid.Row="1" Grid.ColumnSpan="3">
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="3" Visibility="Collapsed">
             <TextBox Width="auto" Height="150" Text="{Binding CodeTemplate}"></TextBox>
             <TextBox IsReadOnly="True" Width="auto" Grid.Column="1" Height="150" Text="{Binding CodeInstance}"></TextBox>
         </StackPanel>

@@ -10,7 +10,7 @@ namespace IconTool.Helper
 {
     public static class HttpClientHelper
     {
-        public static T Post<T>(string param,string fromCollection = "-1",string colorType = "",string tag= null,int currentPage = 1) {
+        public static T Post<T>(string param,string fromCollection = "-1",string colorType = "",string tag= null,int currentPage = 1,int pageSize =30) {
             using (var client = HttpClientFactory.Create())
             {
                 client.DefaultRequestHeaders.Add("authority", "www.iconfont.cn");
@@ -29,7 +29,7 @@ namespace IconTool.Helper
                         { "q",string.IsNullOrEmpty(param) ? "iconfont":param},
                         { "sortType","updated_at"},
                         { "page",currentPage.ToString()},
-                        { "pageSize","30"},
+                        { "pageSize",pageSize.ToString()},
                         { "fromCollection",fromCollection},
                         { "fills",colorType},
                         { "t",ConvertDateTimeToInt().ToString()},

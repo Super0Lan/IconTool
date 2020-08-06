@@ -4,7 +4,7 @@ using System.Text;
 
 namespace IconTool.Services.Interfaces
 {
-    public interface IToolServices
+    public interface IToolService
     {
         /// <summary>
         /// 根据数据和模板生成代码示例
