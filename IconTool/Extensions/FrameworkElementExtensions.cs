@@ -8,6 +8,12 @@ namespace IconTool.Extensions
 {
     public static class FrameworkElementExtensions
     {
+        /// <summary>
+        /// 判断元素是否包含某一元素
+        /// </summary>
+        /// <param name="parent">父级元素</param>
+        /// <param name="element">子级元素</param>
+        /// <returns></returns>
         public static bool IsContains(this DependencyObject parent, DependencyObject element) {
             if (parent == null || element == null) {
                 return false;

@@ -317,7 +317,7 @@ namespace IconTool.ViewModels.ModuleRight
 
         private void OnClickCopyPath(string obj)
         {
-            Clipboard.SetDataObject(string.IsNullOrEmpty(obj) ? "" : $"<Path Width=\"36\" Height=\"36\" Stretch=\"Uniform\" Fill=\"Black\" Data=\"{obj.Replace("|"," ")}\"></Path>");
+            _iconService.CopyXamlIcon("<Path Width=\"36\" Height=\"36\" Stretch=\"Uniform\" Fill=\"Black\" Data={0}\"></Path>",obj, _setting.IsCompress);
         }
     }
 }
