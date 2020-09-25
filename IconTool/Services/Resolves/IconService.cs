@@ -29,7 +29,7 @@ namespace IconTool.Services.Resolves
             return HttpClientHelper.Post<ResultModel<IconCollection>>(searchText, fromType, colorType, tag, page,pageSize);
         }
 
-        public void SaveSvgFiles(IEnumerable<SaveFileInfo> enumerable)
+        public void SaveFiles(IEnumerable<SaveFileInfo> enumerable)
         {
             string path = string.Empty;
             using (CommonOpenFileDialog dialog = new CommonOpenFileDialog())
@@ -47,6 +47,10 @@ namespace IconTool.Services.Resolves
                     FileHelper.CreateFile(fileName,item.Content);
                 });
             }
+        }
+
+        public void SaveFile(SaveFileInfo fileInfo) {
+            SaveFiles(new List<SaveFileInfo>() { fileInfo });
         }
     }
 }

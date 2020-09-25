@@ -209,7 +209,7 @@ namespace IconTool.ViewModels.ModuleRight
 
         private void OnDownloadCode()
         {
-            //_iconService.SaveSvgFiles();
+            _iconService.SaveSvgFiles();
         }
 
         private bool CanDownload()
@@ -219,7 +219,7 @@ namespace IconTool.ViewModels.ModuleRight
 
         private void OnDownloadMaterial()
         {
-            _iconService.SaveSvgFiles(IconCarts.Select(x => new SaveFileInfo() { Name = x.Name, Content = x.Origin_file, Suffix = ".svg", ID = x.Id }));
+            _iconService.SaveFiles(IconCarts.Select(x => new SaveFileInfo() { Name = x.Name, Content = x.Origin_file, Suffix = ".svg", ID = x.Id }));
         }
 
         private void OnClearCart()
