@@ -63,7 +63,7 @@
                    Placement="Bottom">
                 <Border Background="White" Margin="0 5 5 5" CornerRadius="4" Width="{TemplateBinding ActualWidth}" BorderBrush="{DynamicResource ComboBoxBorderBrush}"  x:Name="dropDownBorder" BorderThickness="1">
                     <Border.Effect>
-                        <DropShadowEffect Color="Black" Opacity="0.1" BlurRadius="12" ShadowDepth="2"></DropShadowEffect>
+                        <DropShadowEffect Color="Black" Opacity="0.1" BlurRadius="12" ShadowDepth="-4"></DropShadowEffect>
                     </Border.Effect>
                     <ScrollViewer x:Name="DropDownScrollViewer">
                         <Grid x:Name="grid" RenderOptions.ClearTypeHint="Enabled" Margin="0 4">

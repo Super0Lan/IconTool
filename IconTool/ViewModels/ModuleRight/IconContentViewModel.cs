@@ -39,7 +39,7 @@ namespace IconTool.ViewModels.ModuleRight
         };
 
         #region 页面绑定属性
-        private string _tag;
+        private string _tag = string.Empty;
         public string Tag
         {
             get { return _tag; }
@@ -91,7 +91,7 @@ namespace IconTool.ViewModels.ModuleRight
             }
         }
 
-        private string _colorType;
+        private string _colorType = string.Empty;
         public string ColorType
         {
             get { return _colorType; }
@@ -104,7 +104,7 @@ namespace IconTool.ViewModels.ModuleRight
             }
         }
 
-        private string _fromType;
+        private string _fromType = "-1";
         public string FromType
         {
             get { return _fromType; }
@@ -137,11 +137,10 @@ namespace IconTool.ViewModels.ModuleRight
         public ObservableCollection<IconItemViewModel> Items { get; set; } = new ObservableCollection<IconItemViewModel>();
 
 
-        public DelegateCommand<string> CopyPathCommand { get; private set; }
-
-        public ICommand LoadedCommand { get; private set; }
+        public DelegateCommand<int?> CopyPathCommand { get; private set; }
 
         public DelegateCommand<int?> ChangeCartCommand { get; private set; }
+        public DelegateCommand<int?> RemoveCartCommand { get; private set; }
 
         public DelegateCommand<int?> ChangeCollectionCommand { get; private set; }
 
@@ -157,18 +156,19 @@ namespace IconTool.ViewModels.ModuleRight
         /// </summary>
         public DelegateCommand DownloadCode { get; private set; }
 
+
         public bool KeepAlive => true;
 
-        private IIconService _iconService;
-        private ISetting _setting;
+        private readonly IIconService _iconService;
+        private readonly ISetting _setting;
 
         public IconContentViewModel(IIconService iconService,ISetting setting)
         {
             _iconService = iconService;
             _setting = setting;
-            CopyPathCommand = new DelegateCommand<string>(OnClickCopyPath);
-            LoadedCommand = new DelegateCommand(OnLoaded);
+            CopyPathCommand = new DelegateCommand<int?>(OnClickCopyPath);
             ChangeCartCommand = new DelegateCommand<int?>(OnChangeCart);
+            RemoveCartCommand = new DelegateCommand<int?>(OnRemoveCart);
             ChangeCollectionCommand = new DelegateCommand<int?>(OnCollectionChanged);
             ClearCartCommand = new DelegateCommand(OnClearCart);
             DownloadMaterial = new DelegateCommand(OnDownloadMaterial, CanDownload);
@@ -190,11 +190,25 @@ namespace IconTool.ViewModels.ModuleRight
                 MyCollection.AddRange(_setting.MyCollection);
             }
 
+            InitData();
+        }
+
+        private void OnRemoveCart(int? obj)
+        {
+            var icon = IconCarts.FirstOrDefault(x => x.Id == obj);
+            if (icon != null) {
+                IconCarts.Remove(icon);
+                var iconItem = Items.FirstOrDefault(x => x.Id == obj);
+                if (iconItem != null)
+                {
+                    iconItem.IsCollected = false;
+                }
+            }
         }
 
         private void OnDownloadCode()
         {
-            
+            _iconService.SaveSvgFiles();
         }
 
         private bool CanDownload()
@@ -204,7 +218,7 @@ namespace IconTool.ViewModels.ModuleRight
 
         private void OnDownloadMaterial()
         {
-            
+            _iconService.SaveSvgFiles();
         }
 
         private void OnClearCart()
@@ -263,61 +277,56 @@ namespace IconTool.ViewModels.ModuleRight
             }
         }
 
-        private bool _isLoaded = false;
 
-        private void OnLoaded()
+        private void InitData()
         {
-            _isLoaded = true;
             RefreshIcons();
         }
 
         private void RefreshIcons(int page = 1)
         {
-            if (_isLoaded)
+            IsLoading = true;
+            Task.Run(() =>
             {
-                IsLoading = true;
-                Task.Run(() =>
+                try
                 {
-                    try
-                    {
-                        var res = _iconService.GetList(SearchText, FromType, ColorType, Tag, page);
-                        if (res.IsSuccess)
-                        {
-                            App.UIDispatcher.Invoke(() =>
-                            {
-                                Count = res.Data.Count;
-                                Items.Clear();
-                                foreach (var icon in res.Data.Icons)
-                                {
-                                    Items.Add(new IconItemViewModel()
-                                    {
-                                        Id = icon.Id,
-                                        Name = icon.Name,
-                                        PrototypeSvg = icon.Prototype_svg,
-                                        IsCollected = IconCarts.Any(x => x.Id == icon.Id),
-                                        IsFavorite = MyCollection.Any(x => x.Id == icon.Id),
-                                    });
-                                };
-                                Page = page;
-                            });
-
-                        }
-                    }
-                    finally
+                    var res = _iconService.GetList(SearchText, FromType, ColorType, Tag, page);
+                    if (res.IsSuccess)
                     {
                         App.UIDispatcher.Invoke(() =>
                         {
-                            IsLoading = false;
+                            Count = res.Data.Count;
+                            Items.Clear();
+                            foreach (var icon in res.Data.Icons)
+                            {
+                                Items.Add(new IconItemViewModel()
+                                {
+                                    Id = icon.Id,
+                                    Name = icon.Name,
+                                    PrototypeSvg = icon.Prototype_svg,
+                                    IsCollected = IconCarts.Any(x => x.Id == icon.Id),
+                                    IsFavorite = MyCollection.Any(x => x.Id == icon.Id),
+                                });
+                            };
+                            Page = page;
                         });
-                    }
 
-                });
-            }
+                    }
+                }
+                finally
+                {
+                    App.UIDispatcher.Invoke(() =>
+                    {
+                        IsLoading = false;
+                    });
+                }
+
+            });
         }
 
-        private void OnClickCopyPath(string obj)
+        private void OnClickCopyPath(int? id)
         {
-            _iconService.CopyXamlIcon("<Path Width=\"36\" Height=\"36\" Stretch=\"Uniform\" Fill=\"Black\" Data={0}\"></Path>",obj, _setting.IsCompress);
+            _iconService.CopyXamlIcon("<Path Width=\"36\" Height=\"36\" Stretch=\"Uniform\" Fill=\"Black\" Data={0}\"></Path>",Items.FirstOrDefault(x=>x.Id == id).PrototypeSvg, _setting.IsCompress);
         }
     }
 }

@@ -101,7 +101,7 @@
         </Setter>
         <Setter Property="Effect">
             <Setter.Value>
-                <DropShadowEffect Color="Black" Opacity="0.2" BlurRadius="10"></DropShadowEffect>
+                <DropShadowEffect Color="Black" Opacity="0.2" BlurRadius="10" ShadowDepth="-4"></DropShadowEffect>
             </Setter.Value>
         </Setter>
         <Setter Property="Template">

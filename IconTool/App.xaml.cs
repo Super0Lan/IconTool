@@ -5,8 +5,12 @@ using IconTool.ViewModels;
 using IconTool.Views;
 using Prism.Ioc;
 using Prism.Modularity;
+using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using Prism.Unity;
+using System;
+using System.Globalization;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Navigation;
 using System.Windows.Threading;
@@ -46,12 +50,19 @@ namespace IconTool
         {
            moduleCatalog.AddModule<Views.ModuleRight.ModuleRightModule>();
            moduleCatalog.AddModule<Views.ModuleSetting.ModuleSettingModule>();
+
+            
         }
 
         protected override void OnExit(ExitEventArgs e)
         {
             Settings.Default.Save();
             base.OnExit(e);
+        }
+
+        protected override void ConfigureViewModelLocator()
+        {
+            base.ConfigureViewModelLocator();
         }
     }
 }

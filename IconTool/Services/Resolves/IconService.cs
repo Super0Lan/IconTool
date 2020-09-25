@@ -12,7 +12,6 @@ namespace IconTool.Services.Resolves
     {
         public void CopyXamlIcon(string template,string obj,bool isCompressed = false)
         {
-            //  $"<Path Width=\"36\" Height=\"36\" Stretch=\"Uniform\" Fill=\"Black\" Data=\"{}\"></Path>")
             Clipboard.SetDataObject(string.IsNullOrEmpty(obj) ? "" : string.Format(template, Common.GetPathBySvgData(obj, isCompressed)));
         }
 
