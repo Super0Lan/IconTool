@@ -19,6 +19,9 @@ namespace IconTool.ViewModels
 
         public string PrototypeSvg { get; set; }
 
+        public string Origin_file { get; set; }
+
+
 
         private bool _isFavorite = false;
         /// <summary>

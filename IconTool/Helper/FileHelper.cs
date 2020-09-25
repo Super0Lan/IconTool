@@ -13,7 +13,7 @@ namespace IconTool.Helper
             {
                 Directory.CreateDirectory(directory);
             }
-            byte[] bytes = Encoding.Default.GetBytes(str.ToString());
+            byte[] bytes = Encoding.Default.GetBytes(str);
             using (FileStream fileStream = new FileStream(path,FileMode.Create)) {
                 fileStream.Write(bytes,0, bytes.Length);
                 fileStream.Flush();

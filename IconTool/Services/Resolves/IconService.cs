@@ -1,9 +1,13 @@
 ﻿using IconTool.Helper;
 using IconTool.Models;
 using IconTool.Services.Interfaces;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace IconTool.Services.Resolves
@@ -25,9 +29,24 @@ namespace IconTool.Services.Resolves
             return HttpClientHelper.Post<ResultModel<IconCollection>>(searchText, fromType, colorType, tag, page,pageSize);
         }
 
-        public void SaveSvgFiles()
+        public void SaveSvgFiles(IEnumerable<SaveFileInfo> enumerable)
         {
-            
+            string path = string.Empty;
+            using (CommonOpenFileDialog dialog = new CommonOpenFileDialog())
+            {
+                dialog.IsFolderPicker = true;
+                if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
+                {
+                    path = dialog.FileNames.FirstOrDefault();
+                }
+            }
+            if (Directory.Exists(path)) {
+                Parallel.ForEach(enumerable, (item) =>
+                {
+                    string fileName = Path.Combine(path, $"{item.UniqueName}{item.Suffix}");
+                    FileHelper.CreateFile(fileName,item.Content);
+                });
+            }
         }
     }
 }

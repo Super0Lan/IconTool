@@ -8,6 +8,7 @@ using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -208,7 +209,7 @@ namespace IconTool.ViewModels.ModuleRight
 
         private void OnDownloadCode()
         {
-            _iconService.SaveSvgFiles();
+            //_iconService.SaveSvgFiles();
         }
 
         private bool CanDownload()
@@ -218,7 +219,7 @@ namespace IconTool.ViewModels.ModuleRight
 
         private void OnDownloadMaterial()
         {
-            _iconService.SaveSvgFiles();
+            _iconService.SaveSvgFiles(IconCarts.Select(x => new SaveFileInfo() { Name = x.Name, Content = x.Origin_file, Suffix = ".svg", ID = x.Id }));
         }
 
         private void OnClearCart()
@@ -306,6 +307,7 @@ namespace IconTool.ViewModels.ModuleRight
                                     PrototypeSvg = icon.Prototype_svg,
                                     IsCollected = IconCarts.Any(x => x.Id == icon.Id),
                                     IsFavorite = MyCollection.Any(x => x.Id == icon.Id),
+                                    Origin_file = icon.Origin_file,
                                 });
                             };
                             Page = page;

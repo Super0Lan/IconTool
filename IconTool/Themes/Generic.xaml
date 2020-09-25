@@ -25,6 +25,7 @@
     <CornerRadius x:Key="RoundCorner">99</CornerRadius>
     <sys:Double x:Key="Icon.Size">16</sys:Double>
     <SolidColorBrush x:Key="Icon.Color" Color="#dcdfe6"></SolidColorBrush>
+    <DropShadowEffect x:Key="DropShadowEffect" Color="Black" Opacity="0.2" BlurRadius="10" ShadowDepth="-4"></DropShadowEffect>
     <Style TargetType="Control" x:Key="Loading">
         <Setter Property="Background" Value="#333333"></Setter>
         <Setter Property="Template">

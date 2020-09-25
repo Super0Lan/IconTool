@@ -9,7 +9,7 @@ namespace IconTool.Services.Interfaces
     {
         ResultModel<IconCollection> GetList(string searchText, string fromType, string colorType, string tag, int page = 1, int pageSize = 30);
 
-        void SaveSvgFiles();
+        void SaveSvgFiles(IEnumerable<SaveFileInfo> enumerable);
 
         /// <summary>
         /// 设置粘贴板内容
